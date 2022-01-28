@@ -3,11 +3,11 @@ export interface Rule {
   to: RegExp | string;
 }
 
-export type TypesTransformer = "bold" | "newLine" | "tab" | string;
+export type TypesTransformation = "bold" | "newLine" | "tab" | string;
 
-export interface Transformer {
+export interface Transformation {
   atob: Rule;
   btoa: Rule;
 }
 
-export type RecordTransformer = Record<TypesTransformer, Transformer>;
+export type RecordTransformation = Record<TypesTransformation, Transformation>;

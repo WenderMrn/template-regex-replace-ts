@@ -1,6 +1,6 @@
-import { Transformer, RecordTransformer } from "./types";
+import { Transformation, RecordTransformation } from "./types";
 
-const bold: Transformer = {
+const bold: Transformation = {
   atob: {
     from: /\*\*(.+)\*\*/g,
     to: "<b>$1</b>",
@@ -11,7 +11,7 @@ const bold: Transformer = {
   },
 };
 
-const newLine: Transformer = {
+const newLine: Transformation = {
   atob: {
     from: /\n/g,
     to: "<br/>",
@@ -22,7 +22,7 @@ const newLine: Transformer = {
   },
 };
 
-const tab: Transformer = {
+const tab: Transformation = {
   atob: {
     from: /\t/g,
     to: "&#9;",
@@ -33,7 +33,7 @@ const tab: Transformer = {
   },
 };
 
-const italic: Transformer = {
+const italic: Transformation = {
   atob: {
     from: /~~(.+)~~/g,
     to: "<i>$1</i>",
@@ -44,7 +44,7 @@ const italic: Transformer = {
   },
 };
 
-const link: Transformer = {
+const link: Transformation = {
   atob: {
     from: /\[(.+)\]\((.+)\)/g,
     to: '<a href="$2">$1</a>',
@@ -55,7 +55,7 @@ const link: Transformer = {
   },
 };
 
-const transformers: RecordTransformer = {
+const transformations: RecordTransformation = {
   bold,
   newLine,
   tab,
@@ -63,4 +63,4 @@ const transformers: RecordTransformer = {
   link,
 };
 
-export default transformers;
+export default transformations;
