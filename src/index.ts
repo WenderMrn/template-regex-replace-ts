@@ -4,7 +4,7 @@ const inputText = `\tTítulo da obra\n\nMinha
  **história** começa a ~~muitos~~ anos atrás e ___*underline vai aqui*___\n
  saiba mais em [meu site](http://google.com.br)`;
 
-const tpl = new Template().addTransformers({
+const tpl = new Template().addTransform({
   underline: {
     atob: {
       from: /___\*(.+)\*___/g,

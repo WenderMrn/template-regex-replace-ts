@@ -25,17 +25,17 @@ class Template {
     return this.replaceText(text, "btoa");
   }
 
-  public addTransformers(records: RecordTransformer) {
+  public addTransform(records: RecordTransformer) {
     this.formaterOptions = Object.assign(this.formaterOptions, records);
     return this;
   }
 
-  public replaceTransformers(records: RecordTransformer) {
+  public replaceTransformations(records: RecordTransformer) {
     this.formaterOptions = records;
     return this;
   }
 
-  public emptyTransformers() {
+  public emptyTransformations() {
     this.formaterOptions = {};
     return this;
   }
