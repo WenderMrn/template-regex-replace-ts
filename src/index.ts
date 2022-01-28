@@ -17,10 +17,10 @@ const tpl = new Template().addTransformers({
   },
 });
 
-console.log("ORIG: ", JSON.stringify(inputText));
+console.log("\n\nORIG: ", JSON.stringify(inputText));
 
 const atob = tpl.atob(inputText);
 const btoa = tpl.btoa(atob);
 
-console.log("Atob: ", JSON.stringify(atob));
-console.log("Btoa: ", JSON.stringify(btoa));
+console.log("\n\nAtob: ", JSON.stringify(atob));
+console.log("\n\nBtoa: ", JSON.stringify(btoa));

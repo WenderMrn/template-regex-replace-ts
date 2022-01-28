@@ -1,13 +1,18 @@
 {
-  "name": "typescript",
+  "name": "template-replace-ts",
   "description": "TypeScript + Jest base sandbox.",
   "main": "src/index.ts",
+  "scripts": {
+    "start": "npx tsc && node dist"
+  },
   "devDependencies": {
-    "@types/jest": "^23.0.0"
+    "@types/jest": "^23.0.0",
+    "@types/node": "^17.0.13"
   },
   "dependencies": {
     "class-transformer": "0.2.0",
     "dom": "0.0.3",
-    "reflect-metadata": "0.1.12"
+    "reflect-metadata": "0.1.12",
+    "typescript": "^4.5.5"
   }
 }

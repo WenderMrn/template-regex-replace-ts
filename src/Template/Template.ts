@@ -35,7 +35,7 @@ class Template {
     return this;
   }
 
-  public emptyTransformers(){
+  public emptyTransformers() {
     this.formaterOptions = {};
     return this;
   }
