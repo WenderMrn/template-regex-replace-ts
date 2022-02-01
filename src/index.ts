@@ -1,7 +1,7 @@
 import Template from "./Template";
 
 const inputText = `\tTítulo da obra\n\nMinha
- **história** começa a ~~muitos~~ anos atrás e ___*underline vai aqui*___\n
+ **história** começa há ~~muitos~~ anos (...) e ___*underline vai aqui*___\n
  saiba mais em [meu site](http://google.com.br)`;
 
 const tpl = new Template().addTransform({
