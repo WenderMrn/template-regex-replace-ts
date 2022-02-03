@@ -9,6 +9,18 @@ For example: You can use it to create a textarea element in your form and after 
 
 ### Features
 
+methods
+
+```ts
+const tpl = new Template(); // instance template class
+
+tpl.atob(text); // turns markdown into HTML tags according to the rules
+tpl.btoa(text); // turns HTML tags into markdown according to the rules
+tpl.replaceTransformations(transformation); // replace all transformation
+tpl.addTransform(transformation); // add new transformation rule into existing rules
+tpl.clearTransformations(); // clear all transformations rules from the instance
+```
+
 default rules
 
 ```ts
@@ -66,18 +78,6 @@ const link: Transformation = {
     to: "/[$2]/($1)/g",
   },
 };
-```
-
-methods
-
-```ts
-const tpl = new Template(); // instance template class
-
-tpl.atob(text); // turns markdown into HTML tags according to the rules
-tpl.btoa(text); // turns HTML tags into markdown according to the rules
-tpl.replaceTransformations(transformation); // replace all transformation
-tpl.addTransform(transformation); // add new transformation rule into existing rules
-tpl.clearTransformations(); // clear all transformations rules from the instance
 ```
 
 ### Usage
