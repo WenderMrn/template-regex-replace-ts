@@ -78,6 +78,17 @@ const link: Transformation = {
     to: "/[$2]/($1)/g",
   },
 };
+
+const underline: Transformation = {
+  atob: {
+    from: /___\*(.+)\*___/g,
+    to: "<u>$1</u>",
+  },
+  btoa: {
+    from: /<u>(.+)<\/u>/g,
+    to: "___*$1*___",
+  },
+};
 ```
 
 ### Usage
