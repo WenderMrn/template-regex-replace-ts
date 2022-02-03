@@ -1,6 +1,6 @@
 {
   "name": "template-replace-ts",
-  "description": "TypeScript + Jest base sandbox.",
+  "description": "A parse string project",
   "main": "src/index.ts",
   "scripts": {
     "start": "npx tsc && node dist"

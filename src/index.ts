@@ -1,8 +1,6 @@
 import Template from "./Template";
 
-const inputText = `\tTítulo da obra\n\nMinha
- **história** começa há ~~muitos~~ anos (...) e ___*underline vai aqui*___\n
- saiba mais em [meu site](http://google.com.br)`;
+const inputText = `**Lorem** Ipsum is simply ~up~dummy~up~ text of the [printing](https://en.wikipedia.org/wiki/Printing_press) and typesetting ___*industry*___. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type ~~specimen book~~.\n\t It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`;
 
 const tpl = new Template().addTransform({
   underline: {
@@ -13,6 +11,16 @@ const tpl = new Template().addTransform({
     btoa: {
       from: /<u>(.+)<\/u>/g,
       to: "___*$1*___",
+    },
+  },
+  uppercase: {
+    atob: {
+      from: /~up~(.+)~up~/g,
+      to: `<span class="text-uppercase">$1</span>`,
+    },
+    btoa: {
+      from: /<span class="text-uppercase">(.+)<\/span>/g,
+      to: "~up~$1~up~",
     },
   },
 });

@@ -25,10 +25,10 @@ class Template {
     return this.replaceText(text, "btoa");
   }
 
-  public addTransform(records: RecordTransformation) {
+  public addTransform(...records: RecordTransformation[]) {
     this.transformationOptions = Object.assign(
       this.transformationOptions,
-      records
+      ...records
     );
     return this;
   }
@@ -38,7 +38,7 @@ class Template {
     return this;
   }
 
-  public emptyTransformations() {
+  public clearTransformations() {
     this.transformationOptions = {};
     return this;
   }
