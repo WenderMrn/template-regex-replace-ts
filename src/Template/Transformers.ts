@@ -55,12 +55,24 @@ const link: Transformation = {
   },
 };
 
+const underline: Transformation = {
+  atob: {
+    from: /___\*(.+)\*___/g,
+    to: "<u>$1</u>",
+  },
+  btoa: {
+    from: /<u>(.+)<\/u>/g,
+    to: "___*$1*___",
+  },
+};
+
 const transformations: RecordTransformation = {
   bold,
   newLine,
   tab,
   italic,
   link,
+  underline,
 };
 
 export default transformations;
