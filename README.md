@@ -172,4 +172,6 @@ const textOutput = tpl.atob(text);
  */
 ```
 
-- Note that a unique format that worked this time was ~sm~unknown printer~sm~ which became <small>unknown printer</small>.
+```
+Note that a unique format that worked this time was ~sm~unknown printer~sm~ which became <small>unknown printer</small>.
+```
