@@ -1,28 +1,35 @@
-import { Transformation, RecordTransformation } from "./types";
+import { Transformation, RecordTransformation, TypeOperation } from "./types";
 import Transformers from "./Transformers";
 
 class Template {
   private transformationOptions: RecordTransformation = Transformers;
 
-  private replaceText(text: string, type: "atob" | "btoa") {
+  private replaceText(text: string, type: TypeOperation) {
     let output = text;
     const keys = Object.keys(this.transformationOptions);
 
     keys.forEach((name) => {
       const t: Transformation = this.transformationOptions[name];
-      const operation = type === "atob" ? t.atob : t.btoa;
-      output = output.replace(operation.from, operation.to as string);
+      const operation = type === TypeOperation.Atob ? t.atob : t.btoa;
+
+      if(operation.from && operation.to){
+        output = output.replace(operation.from, operation.to as string);
+      }
+
+      if(operation.replace){
+        output = operation.replace(text);
+      }
     });
 
     return output;
   }
 
   public atob(text: string) {
-    return this.replaceText(text, "atob");
+    return this.replaceText(text, TypeOperation.Atob);
   }
 
   public btoa(text: string) {
-    return this.replaceText(text, "btoa");
+    return this.replaceText(text, TypeOperation.Btoa);
   }
 
   public addTransform(...records: RecordTransformation[]) {

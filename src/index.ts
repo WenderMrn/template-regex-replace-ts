@@ -1,6 +1,12 @@
 import Template from "./Template";
 
-const inputText = `**Lorem** Ipsum is simply ~up~dummy~up~ text of the [printing](https://en.wikipedia.org/wiki/Printing_press) and typesetting ___*industry*___. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type ~~specimen book~~.\n\t It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`;
+const inputText = `
+**Lorem** Ipsum is simply ~up~dummy~up~ text of the 
+[printing](https://en.wikipedia.org/wiki/Printing_press) and typesetting ___*industry*___. Lorem Ipsum has been
+the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of 
+type and scrambled it to make a type ~~specimen book~~.\n\t It has survived not only five centuries, but also the
+leap into electronic typesetting, remaining essentially unchanged. ~abbr=[Estados Unidos da América]~EUA~abbr~
+`;
 
 const tpl = new Template().addTransform({
   underline: {
@@ -21,6 +27,15 @@ const tpl = new Template().addTransform({
     btoa: {
       from: /<span class="text-uppercase">(.+)<\/span>/g,
       to: "~up~$1~up~",
+    },
+  },
+  abrev: {
+    atob: {
+      replace: (text: string) => text.replace(/~abbr=\[(.+)\]~(.+)~abbr~/g,`<abbr title="$1">$2</abbr>`),
+    },
+    btoa: {
+      from: /<abbr title\="(.+)">(.+)<\/abbr>/g,
+      to: "~abbr=[$2]~$1~abbr~",
     },
   },
 });
