@@ -1,7 +1,13 @@
 {
-  "name": "template-replace-ts",
+  "name": "@wmlmrn/template-replace-ts",
   "description": "A parse string project",
+  "version": "0.1.0",
   "main": "src/index.ts",
+  "author": {
+    "name": "Wender Mariano",
+    "email": "wender.mrn@gmail.com"
+  },
+  "license": "MIT",
   "scripts": {
     "build": "npx tsc && node dist",
     "start:example": "npx tsc && node dist/example"
