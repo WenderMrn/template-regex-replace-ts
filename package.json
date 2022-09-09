@@ -3,7 +3,8 @@
   "description": "A parse string project",
   "main": "src/index.ts",
   "scripts": {
-    "start": "npx tsc && node dist"
+    "build": "npx tsc && node dist",
+    "start:example": "npx tsc && node dist/example"
   },
   "devDependencies": {
     "@types/jest": "^23.0.0",

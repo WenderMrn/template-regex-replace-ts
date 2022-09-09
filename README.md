@@ -196,3 +196,11 @@ const textOutput = tpl.atob(text);
 ```
 Note that a unique format that worked this time was ~sm~unknown printer~sm~ which became <small>unknown printer</small>.
 ```
+
+### Example
+
+To show example usage on terminal, execute:
+
+```bash
+$ npm run start:example
+```
