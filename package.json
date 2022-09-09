@@ -1,8 +1,9 @@
 {
-  "name": "@wmlmrn/template-replace-ts",
+  "name": "template-replace-ts",
   "description": "A parse string project",
   "version": "0.1.0",
-  "main": "src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "author": {
     "name": "Wender Mariano",
     "email": "wender.mrn@gmail.com"

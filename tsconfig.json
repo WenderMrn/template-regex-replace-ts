@@ -10,6 +10,7 @@
     "allowJs": true,
     "moduleResolution": "node",
     "rootDir": "src",
+    "declaration": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
