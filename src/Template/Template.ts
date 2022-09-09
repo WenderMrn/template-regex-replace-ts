@@ -24,14 +24,29 @@ class Template {
     return output;
   }
 
+  /**
+   * Receives a original text with marks and apply transformations.
+   * @param text 
+   * @returns transformedText
+   */
   public atob(text: string) {
     return this.replaceText(text, TypeOperation.Atob);
   }
 
-  public btoa(text: string) {
-    return this.replaceText(text, TypeOperation.Btoa);
+  /**
+   * Receives a transformed text and revert transformations on text.
+   * @param transformedText 
+   * @returns text
+   */
+  public btoa(transformedText: string) {
+    return this.replaceText(transformedText, TypeOperation.Btoa);
   }
 
+  /**
+   * Add a new rule transformation to the default transformations existing.
+   * @param records
+   * @returns 
+   */
   public addTransform(...records: RecordTransformation[]) {
     this.transformationOptions = Object.assign(
       this.transformationOptions,
@@ -40,11 +55,20 @@ class Template {
     return this;
   }
 
+  /**
+   * Replace all transformations default by the transformations passed by.
+   * @param records 
+   * @returns 
+   */
   public replaceTransformations(records: RecordTransformation) {
     this.transformationOptions = records;
     return this;
   }
 
+  /**
+   * Clears all transformations and return a Template instance
+   * @returns Template
+   */
   public clearTransformations() {
     this.transformationOptions = {};
     return this;
