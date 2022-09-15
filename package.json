@@ -17,6 +17,7 @@
   ],
   "scripts": {
     "prebuild": "npm run lint",
+    "publish": "npm publish --access public",
     "build": "npx tsc",
     "start:example": "npx tsc && node dist/example",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
