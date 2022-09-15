@@ -1,4 +1,4 @@
-import Template from "../Template";
+import Template from '../Template';
 
 const inputText = `
 **Lorem** Ipsum is simply ~up~dummy~up~ text of the 
@@ -12,11 +12,11 @@ const tpl = new Template().addTransform({
   underline: {
     atob: {
       from: /___\*(.+)\*___/g,
-      to: "<u>$1</u>",
+      to: '<u>$1</u>',
     },
     btoa: {
       from: /<u>(.+)<\/u>/g,
-      to: "___*$1*___",
+      to: '___*$1*___',
     },
   },
   uppercase: {
@@ -26,24 +26,24 @@ const tpl = new Template().addTransform({
     },
     btoa: {
       from: /<span class="text-uppercase">(.+)<\/span>/g,
-      to: "~up~$1~up~",
+      to: '~up~$1~up~',
     },
   },
   abrev: {
     atob: {
-      replace: (text: string) => text.replace(/~abbr=\[(.+)\]~(.+)~abbr~/g,`<abbr title="$1">$2</abbr>`),
+      replace: (text: string) => text.replace(/~abbr=\[(.+)\]~(.+)~abbr~/g, `<abbr title="$1">$2</abbr>`),
     },
     btoa: {
       from: /<abbr title\="(.+)">(.+)<\/abbr>/g,
-      to: "~abbr=[$2]~$1~abbr~",
+      to: '~abbr=[$2]~$1~abbr~',
     },
   },
 });
 
-console.log("\n\nORIG: ", JSON.stringify(inputText));
+console.info('\n\nORIG: ', JSON.stringify(inputText));
 
 const atob = tpl.atob(inputText);
 const btoa = tpl.btoa(atob);
 
-console.log("\n\nAtob: ", JSON.stringify(atob));
-console.log("\n\nBtoa: ", JSON.stringify(btoa));
+console.info('\n\nAtob: ', JSON.stringify(atob));
+console.info('\n\nBtoa: ', JSON.stringify(btoa));
