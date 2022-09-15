@@ -1,5 +1,5 @@
-import { Transformation, RecordTransformation, TypeOperation } from "./types";
-import Transformers from "./Transformers";
+import { Transformation, RecordTransformation, TypeOperation } from './types';
+import Transformers from './Transformers';
 
 class Template {
   private transformationOptions: RecordTransformation = Transformers;
@@ -12,11 +12,11 @@ class Template {
       const t: Transformation = this.transformationOptions[name];
       const operation = type === TypeOperation.Atob ? t.atob : t.btoa;
 
-      if(operation.from && operation.to){
+      if (operation.from && operation.to) {
         output = output.replace(operation.from, operation.to as string);
       }
 
-      if(operation.replace){
+      if (operation.replace) {
         output = operation.replace(text);
       }
     });
@@ -26,7 +26,7 @@ class Template {
 
   /**
    * Receives a original text with marks and apply transformations.
-   * @param text 
+   * @param text
    * @returns transformedText
    */
   public atob(text: string) {
@@ -35,7 +35,7 @@ class Template {
 
   /**
    * Receives a transformed text and revert transformations on text.
-   * @param transformedText 
+   * @param transformedText
    * @returns text
    */
   public btoa(transformedText: string) {
@@ -45,20 +45,17 @@ class Template {
   /**
    * Add a new rule transformation to the default transformations existing.
    * @param records
-   * @returns 
+   * @returns
    */
   public addTransform(...records: RecordTransformation[]) {
-    this.transformationOptions = Object.assign(
-      this.transformationOptions,
-      ...records
-    );
+    this.transformationOptions = Object.assign(this.transformationOptions, ...records);
     return this;
   }
 
   /**
    * Replace all transformations default by the transformations passed by.
-   * @param records 
-   * @returns 
+   * @param records
+   * @returns
    */
   public replaceTransformations(records: RecordTransformation) {
     this.transformationOptions = records;

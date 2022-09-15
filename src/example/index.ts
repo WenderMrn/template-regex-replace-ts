@@ -34,7 +34,7 @@ const tpl = new Template().addTransform({
       replace: (text: string) => text.replace(/~abbr=\[(.+)\]~(.+)~abbr~/g, `<abbr title="$1">$2</abbr>`),
     },
     btoa: {
-      from: /<abbr title\="(.+)">(.+)<\/abbr>/g,
+      from: /<abbr title="(.+)">(.+)<\/abbr>/g,
       to: '~abbr=[$2]~$1~abbr~',
     },
   },

@@ -1,46 +1,46 @@
-import { Transformation, RecordTransformation } from "./types";
+import { Transformation, RecordTransformation } from './types';
 
 const bold: Transformation = {
   atob: {
     from: /\*\*(.+)\*\*/g,
-    to: "<b>$1</b>",
+    to: '<b>$1</b>',
   },
   btoa: {
     from: /<b>(.+)<\/b>/g,
-    to: "**$1**",
+    to: '**$1**',
   },
 };
 
 const newLine: Transformation = {
   atob: {
     from: /\n/g,
-    to: "<br/>",
+    to: '<br/>',
   },
   btoa: {
     from: /(<br \/>|<br\/>|<br>)/g,
-    to: "\n",
+    to: '\n',
   },
 };
 
 const tab: Transformation = {
   atob: {
     from: /\t/g,
-    to: "&#9;",
+    to: '&#9;',
   },
   btoa: {
     from: /"&#9;/g,
-    to: "\t",
+    to: '\t',
   },
 };
 
 const italic: Transformation = {
   atob: {
     from: /~~(.+)~~/g,
-    to: "<i>$1</i>",
+    to: '<i>$1</i>',
   },
   btoa: {
     from: /<i>(.+)<\/i>/g,
-    to: "~~$1~~",
+    to: '~~$1~~',
   },
 };
 
@@ -51,18 +51,18 @@ const link: Transformation = {
   },
   btoa: {
     from: /<a href="(.+)">(.+)<\/a>/g,
-    to: "/[$2]/($1)/g",
+    to: '/[$2]/($1)/g',
   },
 };
 
 const underline: Transformation = {
   atob: {
     from: /___\*(.+)\*___/g,
-    to: "<u>$1</u>",
+    to: '<u>$1</u>',
   },
   btoa: {
     from: /<u>(.+)<\/u>/g,
-    to: "___*$1*___",
+    to: '___*$1*___',
   },
 };
 

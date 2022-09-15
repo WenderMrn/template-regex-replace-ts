@@ -3,14 +3,14 @@ type RuleItem = RegExp | string;
 export interface Rule {
   from?: RuleItem;
   to?: RuleItem;
-  replace?: ((text: string) => string)
+  replace?: (text: string) => string;
 }
 
-export type TypesTransformation = "bold" | "newLine" | "tab" | string;
+export type TypesTransformation = 'bold' | 'newLine' | 'tab' | string;
 
 export enum TypeOperation {
   Atob,
-  Btoa
+  Btoa,
 }
 
 export interface Transformation {
