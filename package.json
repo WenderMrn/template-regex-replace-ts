@@ -13,7 +13,7 @@
   ],
   "license": "MIT",
   "files": [
-    "lib/**/*"
+    "dist/**/*"
   ],
   "scripts": {
     "prebuild": "npm run lint",
