@@ -22,6 +22,7 @@ tpl.replaceTransformations(transformation); // replace all transformation
 tpl.addTransform(transformation); // add new transformation rule into existing rules
 tpl.clearTransformations(); // clear all transformations rules from the instance
 tpl.pickTransformation('bold', ...); // select on or more transformation to apply on atob or btoa
+tpl.resetTransformation() // reset transformations to default values
 ```
 
 default rules

@@ -92,10 +92,19 @@ class Template {
 
   /**
    * Clears all transformations and return a Template instance
-   * @returns Template
+   * @returns Template instance
    */
   public clearTransformations() {
     this.transformationOptions = {};
+    return this;
+  }
+
+  /**
+   * Reset transformation to default values
+   * @returns Template instance
+   */
+  public resetTransformation() {
+    this.transformationOptions = Transformers;
     return this;
   }
 }
