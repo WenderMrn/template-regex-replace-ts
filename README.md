@@ -12,6 +12,8 @@ For example: You can use it to create a textarea element in your form and after 
 methods
 
 ```ts
+import Template from '@wendermrn/template-replace-ts';
+
 const tpl = new Template(); // instance template class
 
 tpl.atob(text); // turns markdown into HTML tags according to the rules
@@ -19,6 +21,7 @@ tpl.btoa(text); // turns HTML tags into markdown according to the rules
 tpl.replaceTransformations(transformation); // replace all transformation
 tpl.addTransform(transformation); // add new transformation rule into existing rules
 tpl.clearTransformations(); // clear all transformations rules from the instance
+tpl.pickTransformation('bold', ...); // select on or more transformation to apply on atob or btoa
 ```
 
 default rules
@@ -27,44 +30,44 @@ default rules
 const bold: Transformation = {
   atob: {
     from: /\*\*(.+)\*\*/g,
-    to: "<b>$1</b>",
+    to: '<b>$1</b>',
   },
   btoa: {
     from: /<b>(.+)<\/b>/g,
-    to: "**$1**",
+    to: '**$1**',
   },
 };
 
 const newLine: Transformation = {
   atob: {
     from: /\n/g,
-    to: "<br/>",
+    to: '<br/>',
   },
   btoa: {
     from: /(<br \/>|<br\/>|<br>)/g,
-    to: "\n",
+    to: '\n',
   },
 };
 
 const tab: Transformation = {
   atob: {
     from: /\t/g,
-    to: "&#9;",
+    to: '&#9;',
   },
   btoa: {
     from: /"&#9;/g,
-    to: "\t",
+    to: '\t',
   },
 };
 
 const italic: Transformation = {
   atob: {
     from: /~~(.+)~~/g,
-    to: "<i>$1</i>",
+    to: '<i>$1</i>',
   },
   btoa: {
     from: /<i>(.+)<\/i>/g,
-    to: "~~$1~~",
+    to: '~~$1~~',
   },
 };
 
@@ -75,30 +78,36 @@ const link: Transformation = {
   },
   btoa: {
     from: /<a href="(.+)">(.+)<\/a>/g,
-    to: "/[$2]/($1)/g",
+    to: '/[$2]/($1)/g',
   },
 };
 
 const underline: Transformation = {
   atob: {
     from: /___\*(.+)\*___/g,
-    to: "<u>$1</u>",
+    to: '<u>$1</u>',
   },
   btoa: {
     from: /<u>(.+)<\/u>/g,
-    to: "___*$1*___",
+    to: '___*$1*___',
   },
 };
 ```
 
 ### Usage
 
+#### Install
+
+```bash
+npm i @wendermrn/template-replace-ts
+```
+
 **Text base example:** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
 
 1. Default transformation
 
 ```ts
-import Template from "./Template";
+import Template from '@wendermrn/template-replace-ts';
 
 const tpl = new Template();
 
@@ -116,18 +125,18 @@ const textOutput = tpl.atob(text);
 2. Default + custom transformation
 
 ```ts
-import Template from "./Template";
+import Template from '@wendermrn/template-replace-ts';
 
 // custom + default transformations
 const tpl = new Template().addTransform({
   underline: {
     atob: {
       from: /___\*(.+)\*___/g,
-      to: "<u>$1</u>",
+      to: '<u>$1</u>',
     },
     btoa: {
       from: /<u>(.+)<\/u>/g,
-      to: "___*$1*___",
+      to: '___*$1*___',
     },
   },
   uppercase: {
@@ -137,17 +146,17 @@ const tpl = new Template().addTransform({
     },
     btoa: {
       from: /<span class="text-uppercase">(.+)<\/span>/g,
-      to: "~up~$1~up~",
+      to: '~up~$1~up~',
     },
   },
   // custom replace function
   abrev: {
     atob: {
-      replace: (text: string) => text.replace(/~abbr=\[(.+)\]~(.+)~abbr~/g,`<abbr title="$1">$2</abbr>`),
+      replace: (text: string) => text.replace(/~abbr=\[(.+)\]~(.+)~abbr~/g, `<abbr title="$1">$2</abbr>`),
     },
     btoa: {
       from: /<abbr title\="(.+)">(.+)<\/abbr>/g,
-      to: "~abbr=[$2]~$1~abbr~",
+      to: '~abbr=[$2]~$1~abbr~',
     },
   },
 });
@@ -166,7 +175,7 @@ const textOutput = tpl.atob(text);
 3. Replace all transformations and set your own
 
 ```ts
-import Template from "./Template";
+import Template from '@wendermrn/template-replace-ts';
 
 // replace transformations
 const tpl = new Template().replaceTransformations({
@@ -177,7 +186,7 @@ const tpl = new Template().replaceTransformations({
     },
     btoa: {
       from: /<span class="text-uppercase">(.+)<\/span>/g,
-      to: "~sm~$1~sm~",
+      to: '~sm~$1~sm~',
     },
   },
 });
@@ -195,12 +204,4 @@ const textOutput = tpl.atob(text);
 
 ```
 Note that a unique format that worked this time was ~sm~unknown printer~sm~ which became <small>unknown printer</small>.
-```
-
-### Example
-
-To show example usage on terminal, execute:
-
-```bash
-$ npm run start:example
 ```

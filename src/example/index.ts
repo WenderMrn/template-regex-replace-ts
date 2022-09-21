@@ -35,7 +35,7 @@ const tpl = new Template().addTransform({
     },
     btoa: {
       from: /<abbr title="(.+)">(.+)<\/abbr>/g,
-      to: '~abbr=[$2]~$1~abbr~',
+      to: '~abbr=[$1]~$2~abbr~',
     },
   },
 });

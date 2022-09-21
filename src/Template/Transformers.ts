@@ -51,7 +51,7 @@ const link: Transformation = {
   },
   btoa: {
     from: /<a href="(.+)">(.+)<\/a>/g,
-    to: '/[$2]/($1)/g',
+    to: '[$2]($1)',
   },
 };
 

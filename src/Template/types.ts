@@ -2,7 +2,7 @@ type RuleItem = RegExp | string;
 
 export interface Rule {
   from?: RuleItem;
-  to?: RuleItem;
+  to?: string;
   replace?: (text: string) => string;
 }
 
