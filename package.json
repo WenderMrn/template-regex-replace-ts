@@ -1,7 +1,7 @@
 {
   "name": "@wendermrn/template-replace-ts",
   "description": "A parse string project",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "author": "Wender Mariano <wender.mrn@gmail.com>",
