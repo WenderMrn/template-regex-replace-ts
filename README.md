@@ -7,6 +7,11 @@ For example: You can use it to create a textarea element in your form and after 
 
 - Typescript >= 4.5.5
 
+### Demo
+
+- React: https://codesandbox.io/s/react-template-replace-ts-demo-b97u4t
+- Angular: https://codesandbox.io/s/angular-template-replace-ts-demo-xc27rf
+
 ### Features
 
 methods
