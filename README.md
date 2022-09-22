@@ -7,10 +7,10 @@ For example: You can use it to create a textarea element in your form and after 
 
 - Typescript >= 4.5.5
 
-### Demo
+### Demo Applications
 
-- React: https://codesandbox.io/s/react-template-replace-ts-demo-b97u4t
-- Angular: https://codesandbox.io/s/angular-template-replace-ts-demo-xc27rf
+- <a href="https://codesandbox.io/s/react-template-replace-ts-demo-b97u4t" target="_blank">React</a>
+- <a href="https://codesandbox.io/s/angular-template-replace-ts-demo-xc27rf" target="_blank">Angular</a>
 
 ### Features
 
