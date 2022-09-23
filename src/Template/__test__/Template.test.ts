@@ -113,8 +113,10 @@ describe('template', () => {
   it('should be link with another attributes', () => {
     const tpl = new Template();
 
-    const inputText = 'Lorem ipsum [dolor](https://www.lipsum.com/){"target": "_blank", "class": "green", "id": "lorem-1"} sit amet...';
-    const outText = 'Lorem ipsum <a href="https://www.lipsum.com/" target="_blank" class="green" id="lorem-1">dolor</a> sit amet...';
+    const inputText =
+      'Lorem ipsum [dolor](https://www.lipsum.com/){"target": "_blank", "class": "green", "id": "lorem-1"} sit amet...';
+    const outText =
+      'Lorem ipsum <a href="https://www.lipsum.com/" target="_blank" class="green" id="lorem-1">dolor</a> sit amet...';
 
     expect(tpl.atob(inputText)).toEqual(outText);
     expect(tpl.btoa(outText)).toEqual(inputText);

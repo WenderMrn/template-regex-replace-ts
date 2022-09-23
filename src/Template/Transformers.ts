@@ -7,7 +7,7 @@ function simpleTagTransformation({ tagName, symbol, markdown }: SimpleTagOption)
       to: `<${tagName}>$1</${tagName}>`,
     },
     btoa: {
-      from: RegExp(`<${tagName}>(.+)<\/${tagName}>`, 'g'),
+      from: RegExp(`<${tagName}>(.+)</${tagName}>`, 'g'),
       to: `${symbol}${markdown}${symbol}$1${symbol}${markdown}${symbol}`,
     },
   };
@@ -93,7 +93,7 @@ const link: Transformation = {
         .map((item) => {
           return item
             .split('=')
-            .map((a) => (!/[\'|"]/g.test(a) ? `"${a}"` : a))
+            .map((a) => (!/['|"]/g.test(a) ? `"${a}"` : a))
             .join(': ');
         })
         .join(', ');

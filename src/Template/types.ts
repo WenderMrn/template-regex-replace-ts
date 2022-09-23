@@ -12,7 +12,8 @@ export type TypesTransformations =
   | 'subscript'
   | 'superscript'
   | 'horizontalRule'
-  | 'titles' | string;
+  | 'titles'
+  | string;
 
 export interface Rule {
   from?: RuleItem;

@@ -9,7 +9,7 @@ class Template {
   }
 
   private replaceText(text: string | undefined, type: TypeOperation) {
-    if(!text) return text;
+    if (!text) return text;
 
     let output = text;
     const keys = Object.keys(this.mapTransformation);
