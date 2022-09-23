@@ -15,7 +15,7 @@ export type TemplateTransformations =
   | 'titles'
   | 'abrev';
 
- export type  CustomTypesTransformations<T> = TemplateTransformations | T;
+export type CustomTypesTransformations<T> = TemplateTransformations | T;
 export interface Rule {
   from?: RuleItem;
   to?: string;
@@ -38,4 +38,4 @@ export interface SimpleTagOption {
   markdown: string;
 }
 
-export type MapTransformation= Record<CustomTypesTransformations<string>, Transformation>;
+export type MapTransformation = Record<CustomTypesTransformations<string>, Transformation>;

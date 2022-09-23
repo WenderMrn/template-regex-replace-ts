@@ -42,7 +42,9 @@ class Template {
    * Select one or more transformations to use on atob or btoa methods
    * @returns new template instance
    */
-  public pickTransformation<T extends CustomTypesTransformations<string> = CustomTypesTransformations<string>>(...names: T[]) {
+  public pickTransformation<T extends CustomTypesTransformations<string> = CustomTypesTransformations<string>>(
+    ...names: T[]
+  ) {
     const transformations: MapTransformation = {};
 
     for (const name of names) {
@@ -58,7 +60,9 @@ class Template {
    * Omit one or more transformations you don't use on atob or btoa methods
    * @returns new template instance
    */
-   public omitTransformation<T extends CustomTypesTransformations<string> =  CustomTypesTransformations<string>>(...names: T[]) {
+  public omitTransformation<T extends CustomTypesTransformations<string> = CustomTypesTransformations<string>>(
+    ...names: T[]
+  ) {
     const transformations: MapTransformation = {};
 
     for (const name in this.mapTransformation) {
