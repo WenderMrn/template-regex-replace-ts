@@ -151,6 +151,18 @@ const titles: Transformation = {
   },
 };
 
+const abrev: Transformation = {
+  atob: {
+    from: /~abbr=\[(.+)\]~(.+)~abbr~/g,
+    to: '<abbr title="$1">$2</abbr>'
+  },
+  btoa: {
+    from: /<abbr title="(.+)">(.+)<\/abbr>/g,
+    to: '~abbr=[$1]~$2~abbr~',
+  },
+}
+
+
 // Simple tags
 const deleted = simpleTagTransformation({ tagName: 'del', markdown: 'del', symbol: '~' });
 const subscript = simpleTagTransformation({ tagName: 'sub', markdown: 'sub', symbol: '~' });
@@ -169,6 +181,7 @@ const transformations: MapTransformation = {
   superscript,
   horizontalRule,
   titles,
+  abrev
 };
 
 export default transformations;

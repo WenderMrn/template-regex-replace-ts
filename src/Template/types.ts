@@ -1,6 +1,6 @@
 type RuleItem = RegExp | string;
 
-export type TypesTransformations =
+export type TemplateTransformations =
   | 'bold'
   | 'newLine'
   | 'tab'
@@ -13,8 +13,9 @@ export type TypesTransformations =
   | 'superscript'
   | 'horizontalRule'
   | 'titles'
-  | string;
+  | 'abrev';
 
+ export type  CustomTypesTransformations<T> = TemplateTransformations | T;
 export interface Rule {
   from?: RuleItem;
   to?: string;
@@ -37,4 +38,4 @@ export interface SimpleTagOption {
   markdown: string;
 }
 
-export type MapTransformation = Record<TypesTransformations, Transformation>;
+export type MapTransformation= Record<CustomTypesTransformations<string>, Transformation>;

@@ -1,2 +1,2 @@
 export { default } from './Template';
-export { Transformation } from './Template/types';
+export { Transformation, MapTransformation, TemplateTransformations } from './Template/types';

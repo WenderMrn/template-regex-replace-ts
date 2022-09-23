@@ -17,7 +17,7 @@ For example: You can use it to create a textarea element in your form and after 
 methods
 
 ```ts
-import Template from '@wendermrn/template-replace-ts';
+import Template, { TemplateTransformations } from '@wendermrn/template-replace-ts';
 
 const tpl = new Template(); // instance template class
 
@@ -26,8 +26,15 @@ tpl.btoa(text); // turns HTML tags into markdown according to the rules
 tpl.replaceTransformations(transformation); // replace all transformation
 tpl.addTransform(transformation); // add new transformation rule into existing rules
 tpl.clearTransformations(); // clear all transformations rules from the instance
-tpl.pickTransformation('bold', ...); // select on or more transformation to apply on atob or btoa
 tpl.resetTransformation() // reset transformations to default values
+
+tpl.pickTransformation('bold', ...); // select on or more transformation to apply on atob or btoa]
+tpl.pickTransformation<TemplateTransformations>('bold', ...); // Same as tpl.pickTransformation(...) but checks types picked (TS)
+tpl.pickTransformation<TemplateTransformations | 'custom'>('custom', ...); // Same as tpl.pickTransformation<...>(...) but checks types picked and accept others custom types (TS)
+
+tpl.omitTransformation("italic", ...) // Omit one or more transformations you don't want use on atob or btoa methods
+tpl.omitTransformation<TemplateTransformations>("italic", ...) //Same tpl.omitTransformation(...) but checks types omitted (TS)
+tpl.omitTransformation<TemplateTransformations | 'custom'>("custom", ...) // Same tpl.omitTransformation<...>(...) but checks types omitted and accept others custom types (TS) 
 ```
 
 default rules
@@ -102,6 +109,10 @@ const underline: Transformation = {
 
 ### Defaut Transformations Examples
 
+```
+transformations: ['bold' , 'newLine', 'tab', 'italic', 'link', 'underline' ,'style', 'deleted', 'subscript', 'superscript','horizontalRule', 'titles', 'abrev']
+```
+
 <html>
   <table>
   <tr>
@@ -110,60 +121,60 @@ const underline: Transformation = {
     <th>To</th>
   </tr>
   <tr>
-    <td>Breakline</td>
+    <td>newLine</td>
     <td>\n</td>
     <td>&ltbr/></td>
     <td><br/></td>
   </tr>
    <tr>
-    <td>Abreviation</td> 
+    <td>abrev</td> 
     <td>~abbr=[United States of America]~USA~abbr~</td>
     <td><abbr title="United States of America">USA</abbr></td>
   </tr>
   <tr>
-    <td>Simple link</td> 
+    <td>link (Simple link)</td> 
     <td>[Simple link](https://www.lipsum.com/)</td> 
     <td><a href="https://www.lipsum.com/">Simple link</a></td>
   </tr>
   <tr>
-    <td>Link New Page</td> 
+    <td>link (Link New Page)</td> 
     <td>[Link New Page](https://www.lipsum.com/){"target": "_blank"}</td> 
     <td><a href="https://www.lipsum.com/" target="_blank">Link New Page</a></td>
   </tr>
    <tr>
-    <td>Another Link attributes</td> 
+    <td>link (Another attributes)</td> 
     <td>[Another Link](https://www.lipsum.com/){"target": "_blank", "class": "default-link", id: "link-lorem"}</td> 
     <td>
       <a href="https://www.lipsum.com/" target="_blank" class="default-link" id="link-lorem">Another Link</a>
     </td>
   </tr>
   <tr>
-    <td>Styled Text</td> 
+    <td>style</td> 
     <td>~style=[color: red; font-weight: bold]~Styled Text~style~</td> 
      <td><span style="color: red; font-weight: bold">Styled Text</span></td>
   </tr>
   <tr>
-    <td>Striped Text</td> 
+    <td>deleted</td> 
     <td>~del~Striped Text~del~</td> 
     <td><del>Striped Text</del></td>
   </tr>
   <tr>
-    <td>Subscript text</td> 
+    <td>subscript</td> 
     <td>~sub~Subscript text~sub~</td> 
     <td><sub>Subscript text</sub></td>
   </tr>
   <tr>
-    <td>Superscript text</td> 
+    <td>superscript</td> 
     <td>~sup~Superscript text~sup~</td> 
     <td><sup>Superscript text</sup></td>
   </tr>
   <tr>
-    <td>Horintal rule</td> 
+    <td>horizontalRule</td> 
     <td>--- or ***</td> 
     <td><hr/></td>
   </tr>
   <tr>
-    <td>Titles</td> 
+    <td>titles</td> 
     <td>t1{Title One} t2{Title Two} ... t6{Title Six}</td> 
     <td><h1>Title One</h1><h4>Title For</h4><h6>Title Six</h6></td>
   </tr>

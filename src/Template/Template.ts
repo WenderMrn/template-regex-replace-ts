@@ -1,4 +1,4 @@
-import { Transformation, MapTransformation, TypeOperation } from './types';
+import { Transformation, MapTransformation, TypeOperation, CustomTypesTransformations } from './types';
 import Transformers from './Transformers';
 
 class Template {
@@ -39,14 +39,30 @@ class Template {
   }
 
   /**
-   * Select one or more transformations to use together atob or btoa methods
+   * Select one or more transformations to use on atob or btoa methods
    * @returns new template instance
    */
-  public pickTransformation(...names: string[]) {
+  public pickTransformation<T extends CustomTypesTransformations<string> = CustomTypesTransformations<string>>(...names: T[]) {
     const transformations: MapTransformation = {};
 
     for (const name of names) {
       if (this.mapTransformation[name]) {
+        transformations[name] = this.mapTransformation[name];
+      }
+    }
+
+    return new Template().replaceTransformations(transformations);
+  }
+
+  /**
+   * Omit one or more transformations you don't use on atob or btoa methods
+   * @returns new template instance
+   */
+   public omitTransformation<T extends CustomTypesTransformations<string> =  CustomTypesTransformations<string>>(...names: T[]) {
+    const transformations: MapTransformation = {};
+
+    for (const name in this.mapTransformation) {
+      if (!names.includes(name as T)) {
         transformations[name] = this.mapTransformation[name];
       }
     }
@@ -77,7 +93,7 @@ class Template {
    * @param transformations
    * @returns
    */
-  public addTransform(...transformations: MapTransformation[]) {
+  public addTransform<T extends MapTransformation[]>(...transformations: T) {
     this.mapTransformation = Object.assign(this.mapTransformation, ...transformations);
     return this;
   }
@@ -87,7 +103,7 @@ class Template {
    * @param transformations
    * @returns
    */
-  public replaceTransformations(transformations: MapTransformation) {
+  public replaceTransformations<T extends MapTransformation>(transformations: T) {
     this.mapTransformation = transformations;
     return this;
   }

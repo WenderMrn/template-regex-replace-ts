@@ -1,7 +1,8 @@
 import { describe, expect } from '@jest/globals';
-import Template from '../Template';
+import Template from '../index';
+import { TemplateTransformations } from '../types';
 
-describe('template', () => {
+describe('template: clear / reset / replace / add', () => {
   it('should be empty transformation', () => {
     const tpl = new Template().clearTransformations();
 
@@ -60,18 +61,17 @@ describe('template', () => {
     expect(tpl.btoa(outText)).toEqual(inputText);
   });
 
-  it('should be replace by custom function', () => {
-    const tpl = new Template().addTransform({
-      abrev: {
-        atob: {
-          replace: (text: string) => text.replace(/~abbr=\[(.+)\]~(.+)~abbr~/g, `<abbr title="$1">$2</abbr>`),
-        },
-        btoa: {
-          from: /<abbr title="(.+)">(.+)<\/abbr>/g,
-          to: '~abbr=[$1]~$2~abbr~',
-        },
-      },
-    });
+  it('should be reset transformations', () => {
+    const tpl = new Template();
+
+    expect(tpl.clearTransformations().getTransformationsName().length).toBe(0);
+    expect(tpl.resetTransformation().getTransformationsName().length).toBeGreaterThan(0);
+  });
+});
+
+describe('template: format', () => {
+  it('should be a abbreviated text', () => {
+    const tpl = new Template();
 
     const inputText = `~abbr=[United States of America]~USA~abbr~`;
     const outText = `<abbr title="United States of America">USA</abbr>`;
@@ -122,34 +122,6 @@ describe('template', () => {
     expect(tpl.btoa(outText)).toEqual(inputText);
   });
 
-  it('should be select a transformation to apply', () => {
-    const tpl = new Template().pickTransformation('link', 'bold');
-
-    const inputText = 'Lorem ipsum [dolor](https://www.lipsum.com/) sit **amet**...';
-    const outText = 'Lorem ipsum <a href="https://www.lipsum.com/">dolor</a> sit <b>amet</b>...';
-
-    expect(tpl.atob(inputText)).toEqual(outText);
-    expect(tpl.btoa(outText)).toEqual(inputText);
-  });
-
-  it('should be not change text on select a invalid transformation to apply', () => {
-    const tpl = new Template().pickTransformation('linkhtml'); // not exist
-
-    const inputText = 'Lorem ipsum [dolor](https://www.lipsum.com/) sit amet...';
-
-    expect(tpl.atob(inputText)).toEqual(inputText);
-  });
-
-  it('should be a styled text', () => {
-    const tpl = new Template().pickTransformation('style');
-
-    const inputText = '~style=[color: red; font-weight: bold]~Lorem~style~ ipsum dolor sit amet...';
-    const outputText = '<span style="color: red; font-weight: bold">Lorem</span> ipsum dolor sit amet...';
-
-    expect(tpl.atob(inputText)).toEqual(outputText);
-    expect(tpl.btoa(outputText)).toEqual(inputText);
-  });
-
   it('should be a deleted text', () => {
     const tpl = new Template();
 
@@ -180,7 +152,7 @@ describe('template', () => {
     expect(tpl.btoa(outputText)).toEqual(inputText);
   });
 
-  it('should be a horintal rule A', () => {
+  it('should be a horizontal rule A', () => {
     const tpl = new Template();
 
     const inputText = '--- ipsum dolor sit amet...';
@@ -190,7 +162,7 @@ describe('template', () => {
     expect(tpl.btoa(outputText)).toEqual(inputText);
   });
 
-  it('should be a horintal rule B', () => {
+  it('should be a horizontal rule B', () => {
     const tpl = new Template();
 
     const inputText = 'Lorem ipsum *** dolor sit amet...';
@@ -209,5 +181,98 @@ describe('template', () => {
 
     expect(tpl.atob(inputText)).toEqual(outputText);
     expect(tpl.btoa(outputText)).toEqual(outputText);
+  });
+});
+
+describe('template: pick / omit', () => {
+  it('should be pick 3 transformation', () => {
+    const tpl = new Template();
+
+    expect(
+      tpl.pickTransformation<TemplateTransformations>('abrev', 'bold', 'link').getTransformationsName().length,
+    ).toBe(3);
+  });
+
+  it('should be select a transformation to apply', () => {
+    const tpl = new Template().pickTransformation<TemplateTransformations>('link', 'bold');
+
+    const inputText = 'Lorem ipsum [dolor](https://www.lipsum.com/) sit **amet**...';
+    const outText = 'Lorem ipsum <a href="https://www.lipsum.com/">dolor</a> sit <b>amet</b>...';
+
+    expect(tpl.atob(inputText)).toEqual(outText);
+    expect(tpl.btoa(outText)).toEqual(inputText);
+  });
+
+  it('should be not change text on select a invalid transformation to apply', () => {
+    const tpl = new Template().pickTransformation('linkhtml'); // not exist
+
+    const inputText = 'Lorem ipsum [dolor](https://www.lipsum.com/) sit amet...';
+
+    expect(tpl.atob(inputText)).toEqual(inputText);
+  });
+
+  it('should be a styled text picked', () => {
+    const tpl = new Template().pickTransformation('style');
+
+    const inputText = '~style=[color: red; font-weight: bold]~Lorem~style~ ipsum dolor sit amet...';
+    const outputText = '<span style="color: red; font-weight: bold">Lorem</span> ipsum dolor sit amet...';
+
+    expect(tpl.atob(inputText)).toEqual(outputText);
+    expect(tpl.btoa(outputText)).toEqual(inputText);
+  });
+
+  it('should be a upsercase text picked (TS)', () => {
+    type CustomTemplateTransformations = TemplateTransformations | 'uppercase';
+
+    const tpl = new Template()
+      .addTransform({
+        uppercase: {
+          atob: {
+            from: /~up~(.+)~up~/g,
+            to: `<span class="text-uppercase">$1</span>`,
+          },
+          btoa: {
+            from: /<span class="text-uppercase">(.+)<\/span>/g,
+            to: '~up~$1~up~',
+          },
+        },
+      })
+      .pickTransformation<CustomTemplateTransformations>('uppercase');
+
+    const inputText = 'Lorem ipsum dolor ~up~sit~up~ amet...';
+    const outputText = 'Lorem ipsum dolor <span class="text-uppercase">sit</span> amet...';
+
+    expect(tpl.atob(inputText)).toEqual(outputText);
+    expect(tpl.btoa(outputText)).toEqual(inputText);
+  });
+
+  it('should be omit 3 transformation', () => {
+    const tpl = new Template();
+
+    expect(
+      tpl.omitTransformation<TemplateTransformations>('abrev', 'bold', 'link').getTransformationsName().length,
+    ).toBe(tpl.getTransformationsName().length - 3);
+  });
+
+  it('should be omit one or more transformations', () => {
+    const tpl = new Template().omitTransformation('bold');
+
+    const inputText = 't1{Title One} **Omitted** ---';
+    const outputText = '<h1>Title One</h1> **Omitted** <hr/>';
+    const outputText2 = '<h1>Title One</h1> **Omitted** ---';
+
+    expect(tpl.atob(inputText)).toEqual(outputText);
+    expect(tpl.btoa(outputText)).toEqual(outputText2);
+  });
+
+  it('should be omit one or more transformations (TS)', () => {
+    const tpl = new Template().omitTransformation<TemplateTransformations>('bold');
+
+    const inputText = 't1{Title One} **Omitted** ---';
+    const outputText = '<h1>Title One</h1> **Omitted** <hr/>';
+    const outputText2 = '<h1>Title One</h1> **Omitted** ---';
+
+    expect(tpl.atob(inputText)).toEqual(outputText);
+    expect(tpl.btoa(outputText)).toEqual(outputText2);
   });
 });
