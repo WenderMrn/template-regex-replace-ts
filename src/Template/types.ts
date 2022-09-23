@@ -1,12 +1,24 @@
 type RuleItem = RegExp | string;
 
+export type TypesTransformations =
+  | 'bold'
+  | 'newLine'
+  | 'tab'
+  | 'italic'
+  | 'link'
+  | 'underline'
+  | 'style'
+  | 'deleted'
+  | 'subscript'
+  | 'superscript'
+  | 'horizontalRule'
+  | 'titles' | string;
+
 export interface Rule {
   from?: RuleItem;
   to?: string;
   replace?: (text: string) => string;
 }
-
-export type TypesTransformation = 'bold' | 'newLine' | 'tab' | string;
 
 export enum TypeOperation {
   Atob,
@@ -18,4 +30,10 @@ export interface Transformation {
   btoa: Rule;
 }
 
-export type RecordTransformation = Record<TypesTransformation, Transformation>;
+export interface SimpleTagOption {
+  tagName: string;
+  symbol: string;
+  markdown: string;
+}
+
+export type MapTransformation = Record<TypesTransformations, Transformation>;

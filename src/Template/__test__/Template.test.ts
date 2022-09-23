@@ -41,7 +41,7 @@ describe('template', () => {
 
   it('should be add a new transformations', () => {
     const tpl = new Template().addTransform({
-      underline: {
+      uppercase: {
         atob: {
           from: /~up~(.+)~up~/g,
           to: `<span class="text-uppercase">$1</span>`,
@@ -100,6 +100,26 @@ describe('template', () => {
     expect(tpl.btoa(outText)).toEqual(inputText);
   });
 
+  it('should be link target blank', () => {
+    const tpl = new Template();
+
+    const inputText = 'Lorem ipsum [dolor](https://www.lipsum.com/){"target": "_blank"} sit amet...';
+    const outText = 'Lorem ipsum <a href="https://www.lipsum.com/" target="_blank">dolor</a> sit amet...';
+
+    expect(tpl.atob(inputText)).toEqual(outText);
+    expect(tpl.btoa(outText)).toEqual(inputText);
+  });
+
+  it('should be link with another attributes', () => {
+    const tpl = new Template();
+
+    const inputText = 'Lorem ipsum [dolor](https://www.lipsum.com/){"target": "_blank", "class": "green", "id": "lorem-1"} sit amet...';
+    const outText = 'Lorem ipsum <a href="https://www.lipsum.com/" target="_blank" class="green" id="lorem-1">dolor</a> sit amet...';
+
+    expect(tpl.atob(inputText)).toEqual(outText);
+    expect(tpl.btoa(outText)).toEqual(inputText);
+  });
+
   it('should be select a transformation to apply', () => {
     const tpl = new Template().pickTransformation('link', 'bold');
 
@@ -116,5 +136,76 @@ describe('template', () => {
     const inputText = 'Lorem ipsum [dolor](https://www.lipsum.com/) sit amet...';
 
     expect(tpl.atob(inputText)).toEqual(inputText);
+  });
+
+  it('should be a styled text', () => {
+    const tpl = new Template().pickTransformation('style');
+
+    const inputText = '~style=[color: red; font-weight: bold]~Lorem~style~ ipsum dolor sit amet...';
+    const outputText = '<span style="color: red; font-weight: bold">Lorem</span> ipsum dolor sit amet...';
+
+    expect(tpl.atob(inputText)).toEqual(outputText);
+    expect(tpl.btoa(outputText)).toEqual(inputText);
+  });
+
+  it('should be a deleted text', () => {
+    const tpl = new Template();
+
+    const inputText = '~del~Lorem~del~ ipsum dolor sit amet...';
+    const outputText = '<del>Lorem</del> ipsum dolor sit amet...';
+
+    expect(tpl.atob(inputText)).toEqual(outputText);
+    expect(tpl.btoa(outputText)).toEqual(inputText);
+  });
+
+  it('should be a subscript text', () => {
+    const tpl = new Template();
+
+    const inputText = '~sub~Lorem~sub~ ipsum dolor sit amet...';
+    const outputText = '<sub>Lorem</sub> ipsum dolor sit amet...';
+
+    expect(tpl.atob(inputText)).toEqual(outputText);
+    expect(tpl.btoa(outputText)).toEqual(inputText);
+  });
+
+  it('should be a superscript text', () => {
+    const tpl = new Template();
+
+    const inputText = '~sup~Lorem~sup~ ipsum dolor sit amet...';
+    const outputText = '<sup>Lorem</sup> ipsum dolor sit amet...';
+
+    expect(tpl.atob(inputText)).toEqual(outputText);
+    expect(tpl.btoa(outputText)).toEqual(inputText);
+  });
+
+  it('should be a horintal rule A', () => {
+    const tpl = new Template();
+
+    const inputText = '--- ipsum dolor sit amet...';
+    const outputText = '<hr/> ipsum dolor sit amet...';
+
+    expect(tpl.atob(inputText)).toEqual(outputText);
+    expect(tpl.btoa(outputText)).toEqual(inputText);
+  });
+
+  it('should be a horintal rule B', () => {
+    const tpl = new Template();
+
+    const inputText = 'Lorem ipsum *** dolor sit amet...';
+    const outputText = 'Lorem ipsum <hr/> dolor sit amet...';
+    const inputTextOutput = 'Lorem ipsum --- dolor sit amet...';
+
+    expect(tpl.atob(inputText)).toEqual(outputText);
+    expect(tpl.btoa(outputText)).toEqual(inputTextOutput);
+  });
+
+  it('should be diferents titles sizes', () => {
+    const tpl = new Template();
+
+    const inputText = 't1{Title One} t2{Title Two} ... t6{Title Six}';
+    const outputText = '<h1>Title One</h1> <h2>Title Two</h2> ... <h6>Title Six</h6>';
+
+    expect(tpl.atob(inputText)).toEqual(outputText);
+    expect(tpl.btoa(outputText)).toEqual(outputText);
   });
 });

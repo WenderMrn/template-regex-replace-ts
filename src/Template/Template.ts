@@ -1,19 +1,21 @@
-import { Transformation, RecordTransformation, TypeOperation } from './types';
+import { Transformation, MapTransformation, TypeOperation } from './types';
 import Transformers from './Transformers';
 
 class Template {
-  private transformationOptions: RecordTransformation;
+  private mapTransformation: MapTransformation;
 
   constructor() {
-    this.transformationOptions = Transformers;
+    this.mapTransformation = Transformers;
   }
 
-  private replaceText(text: string, type: TypeOperation) {
+  private replaceText(text: string | undefined, type: TypeOperation) {
+    if(!text) return text;
+
     let output = text;
-    const keys = Object.keys(this.transformationOptions);
+    const keys = Object.keys(this.mapTransformation);
 
     for (const name of keys) {
-      const t: Transformation = this.transformationOptions[name];
+      const t: Transformation = this.mapTransformation[name];
       const operation = type === TypeOperation.Atob ? t.atob : t.btoa;
 
       if (operation.from && operation.to) {
@@ -33,7 +35,7 @@ class Template {
    * @returns string[]
    */
   public getTransformationsName() {
-    return Object.keys(this.transformationOptions);
+    return Object.keys(this.mapTransformation);
   }
 
   /**
@@ -41,11 +43,11 @@ class Template {
    * @returns new template instance
    */
   public pickTransformation(...names: string[]) {
-    const transformations: RecordTransformation = {};
+    const transformations: MapTransformation = {};
 
     for (const name of names) {
-      if (this.transformationOptions[name]) {
-        transformations[name] = this.transformationOptions[name];
+      if (this.mapTransformation[name]) {
+        transformations[name] = this.mapTransformation[name];
       }
     }
 
@@ -57,7 +59,7 @@ class Template {
    * @param text
    * @returns transformedText
    */
-  public atob(text: string) {
+  public atob(text: string | undefined) {
     return this.replaceText(text, TypeOperation.Atob);
   }
 
@@ -66,27 +68,27 @@ class Template {
    * @param transformedText
    * @returns text
    */
-  public btoa(transformedText: string) {
+  public btoa(transformedText: string | undefined) {
     return this.replaceText(transformedText, TypeOperation.Btoa);
   }
 
   /**
    * Add a new rule transformation to the default transformations existing.
-   * @param records
+   * @param transformations
    * @returns
    */
-  public addTransform(...records: RecordTransformation[]) {
-    this.transformationOptions = Object.assign(this.transformationOptions, ...records);
+  public addTransform(...transformations: MapTransformation[]) {
+    this.mapTransformation = Object.assign(this.mapTransformation, ...transformations);
     return this;
   }
 
   /**
    * Replace all transformations default by the transformations passed by.
-   * @param records
+   * @param transformations
    * @returns
    */
-  public replaceTransformations(records: RecordTransformation) {
-    this.transformationOptions = records;
+  public replaceTransformations(transformations: MapTransformation) {
+    this.mapTransformation = transformations;
     return this;
   }
 
@@ -95,7 +97,7 @@ class Template {
    * @returns Template instance
    */
   public clearTransformations() {
-    this.transformationOptions = {};
+    this.mapTransformation = {};
     return this;
   }
 
@@ -104,7 +106,7 @@ class Template {
    * @returns Template instance
    */
   public resetTransformation() {
-    this.transformationOptions = Transformers;
+    this.mapTransformation = Transformers;
     return this;
   }
 }

@@ -18,7 +18,6 @@
   "scripts": {
     "prebuild": "npm run lint",
     "prepublish": "npx jest",
-    "publish": "npm publish --access public",
     "build": "npx tsc",
     "start:example": "npx tsc && node dist/example",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",

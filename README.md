@@ -14,6 +14,89 @@ For example: You can use it to create a textarea element in your form and after 
 
 ### Features
 
+### Defaut Transformations Examples
+
+<html>
+  <table>
+  <tr>
+    <th>Name</th>
+    <th>From</th>
+    <th>To</th>
+    <th>Element</th>
+  </tr>
+  <tr>
+    <td>Breakline</td>
+    <td>\n</td>
+    <td>&ltbr/></td>
+    <td><br/></td>
+  </tr>
+   <tr>
+    <td>Abreviation</td> 
+    <td>~abbr=[United States of America]~USA~abbr~</td>
+    <td>&ltabbr title="United States of America">USA&lt/abbr></td> 
+    <td><abbr title="United States of America">USA</abbr></td>
+  </tr>
+  <tr>
+    <td>Simple link</td> 
+    <td>[Simple link](https://www.lipsum.com/)</td> 
+    <td>&lta href="https://www.lipsum.com/">Simple link&lt/a></td>
+    <td><a href="https://www.lipsum.com/">Simple link</a></td>
+  </tr>
+  <tr>
+    <td>Link New Page</td> 
+    <td>[Link New Page](https://www.lipsum.com/){"target": "_blank"}</td> 
+    <td>&lta href="https://www.lipsum.com/" target="_blank">Link New Page&lt/a></td>
+    <td><a href="https://www.lipsum.com/" target="_blank">Link New Page</a></td>
+  </tr>
+   <tr>
+    <td>Another Link attributes</td> 
+    <td>[Another Link](https://www.lipsum.com/){"target": "_blank", "class": "default-link", id: "link-lorem"}</td> 
+    <td>
+      &lta href="https://www.lipsum.com/" target="_blank" class="default-link" id="link-lorem">Another Link&lt/a>
+    </td>
+    <td>
+      <a href="https://www.lipsum.com/" target="_blank" class="default-link" id="link-lorem">Another Link</a>
+    </td>
+  </tr>
+  <tr>
+    <td>Styled Text</td> 
+    <td>~style=[color: red; font-weight: bold]~Styled Text~style~</td> 
+    <td>&ltspan style="color: red; font-weight: bold">Styled Text&lt/span></td>
+     <td><span style="color: red; font-weight: bold">Styled Text</span></td>
+  </tr>
+  <tr>
+    <td>Striped Text</td> 
+    <td>~del~Striped Text~del~</td> 
+    <td>&ltdel>Striped Text&lt/del></td>
+    <td><del>Striped Text</del></td>
+  </tr>
+  <tr>
+    <td>Subscript text</td> 
+    <td>~sub~Subscript text~sub~</td> 
+    <td>&ltsub>Subscript text&lt/sub></td>
+    <td><sub>Subscript text</sub></td>
+  </tr>
+  <tr>
+    <td>Superscript text</td> 
+    <td>~sup~Superscript text~sup~</td> 
+    <td>&ltsup>Superscript text&lt/sup></td>
+    <td><sup>Superscript text</sup></td>
+  </tr>
+  <tr>
+    <td>Horintal rule</td> 
+    <td>--- or ***</td> 
+    <td>&lthr/></td>
+    <td><hr/></td>
+  </tr>
+  <tr>
+    <td>Titles</td> 
+    <td>t1{Title One} t2{Title Two} ... t6{Title Six}</td> 
+    <td>&lth1>Title One&lt/h1> &lth2>Title Two&lt/h2> ... &lth6>Title Six&lt/h6></td>
+    <td><h1>Title One</h1><h4>Title For</h4><h6>Title Six</h6></td>
+  </tr>
+</table>
+</html>
+
 methods
 
 ```ts

@@ -37,7 +37,7 @@ const tpl = new Template().addTransform({
       from: /<abbr title="(.+)">(.+)<\/abbr>/g,
       to: '~abbr=[$1]~$2~abbr~',
     },
-  },
+  }
 });
 
 console.info('\n\nORIG: ', JSON.stringify(inputText));
