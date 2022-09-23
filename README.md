@@ -123,7 +123,6 @@ transformations: ['bold' , 'newLine', 'tab', 'italic', 'link', 'underline' ,'sty
   <tr>
     <td>newLine</td>
     <td>\n</td>
-    <td>&ltbr/></td>
     <td><br/></td>
   </tr>
    <tr>
