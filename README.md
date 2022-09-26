@@ -42,11 +42,11 @@ example default rules
 ```ts
 const bold: Transformation = {
   atob: {
-    from: /\*\*(.+)\*\*/g,
+    from: /\*\*([\s\S]*?)\*\*/g,
     to: '<b>$1</b>',
   },
   btoa: {
-    from: /<b>(.+)<\/b>/g,
+    from: /<b>([\s\S]*?)<\/b>/g,
     to: '**$1**',
   },
 };
@@ -75,11 +75,11 @@ const tab: Transformation = {
 
 const italic: Transformation = {
   atob: {
-    from: /~~(.+)~~/g,
+    from: /~~([\s\S]*?)~~/g,
     to: '<i>$1</i>',
   },
   btoa: {
-    from: /<i>(.+)<\/i>/g,
+    from: /<i>([\s\S]*?)<\/i>/g,
     to: '~~$1~~',
   },
 };
