@@ -13,7 +13,7 @@ export type TemplateTransformations =
   | 'superscript'
   | 'horizontalRule'
   | 'titles'
-  | 'abrev';
+  | 'abbrev';
 
 export type CustomTypesTransformations<T> = TemplateTransformations | T;
 export interface Rule {

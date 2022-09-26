@@ -110,7 +110,7 @@ const underline: Transformation = {
 ### Defaut Transformations Examples
 
 ```
-transformations: ['bold' , 'newLine', 'tab', 'italic', 'link', 'underline' ,'style', 'deleted', 'subscript', 'superscript','horizontalRule', 'titles', 'abrev']
+transformations: ['bold' , 'newLine', 'tab', 'italic', 'link', 'underline' ,'style', 'deleted', 'subscript', 'superscript','horizontalRule', 'titles', 'abbrev']
 ```
 
 <html>
@@ -126,7 +126,7 @@ transformations: ['bold' , 'newLine', 'tab', 'italic', 'link', 'underline' ,'sty
     <td><br/></td>
   </tr>
    <tr>
-    <td>abrev</td> 
+    <td>abbrev</td> 
     <td>~abbr=[United States of America]~USA~abbr~</td>
     <td><abbr title="United States of America">USA</abbr></td>
   </tr>
@@ -175,7 +175,7 @@ transformations: ['bold' , 'newLine', 'tab', 'italic', 'link', 'underline' ,'sty
   <tr>
     <td>titles</td> 
     <td>t1{Title One} t2{Title Two} ... t6{Title Six}</td> 
-    <td><h1>Title One</h1><h4>Title For</h4><h6>Title Six</h6></td>
+    <td><h1>Title One</h1><h4>Title Two</h4><h6>Title Six</h6></td>
   </tr>
 </table>
 </html>
@@ -236,7 +236,7 @@ const tpl = new Template().addTransform({
     },
   },
   // custom replace function
-  abrev: {
+  abbrev: {
     atob: {
       replace: (text: string) => text.replace(/~abbr=\[(.+)\]~(.+)~abbr~/g, `<abbr title="$1">$2</abbr>`),
     },

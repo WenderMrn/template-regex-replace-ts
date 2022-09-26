@@ -151,7 +151,7 @@ const titles: Transformation = {
   },
 };
 
-const abrev: Transformation = {
+const abbrev: Transformation = {
   atob: {
     from: /~abbr=\[(.+)\]~(.+)~abbr~/g,
     to: '<abbr title="$1">$2</abbr>',
@@ -180,7 +180,7 @@ const transformations: MapTransformation = {
   superscript,
   horizontalRule,
   titles,
-  abrev,
+  abbrev,
 };
 
 export default transformations;

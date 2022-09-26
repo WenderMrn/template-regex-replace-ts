@@ -29,7 +29,7 @@ const tpl = new Template().addTransform({
       to: '~up~$1~up~',
     },
   },
-  abrev: {
+  abbrev: {
     atob: {
       replace: (text: string) => text.replace(/~abbr=\[(.+)\]~(.+)~abbr~/g, `<abbr title="$1">$2</abbr>`),
     },

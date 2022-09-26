@@ -173,7 +173,7 @@ describe('template: format', () => {
     expect(tpl.btoa(outputText)).toEqual(inputTextOutput);
   });
 
-  it('should be diferents titles sizes', () => {
+  it('should be different titles sizes', () => {
     const tpl = new Template();
 
     const inputText = 't1{Title One} t2{Title Two} ... t6{Title Six}';
@@ -189,7 +189,7 @@ describe('template: pick / omit', () => {
     const tpl = new Template();
 
     expect(
-      tpl.pickTransformation<TemplateTransformations>('abrev', 'bold', 'link').getTransformationsName().length,
+      tpl.pickTransformation<TemplateTransformations>('abbrev', 'bold', 'link').getTransformationsName().length,
     ).toBe(3);
   });
 
@@ -239,8 +239,8 @@ describe('template: pick / omit', () => {
       })
       .pickTransformation<CustomTemplateTransformations>('uppercase');
 
-    const inputText = 'Lorem ipsum dolor ~up~sit~up~ amet...';
-    const outputText = 'Lorem ipsum dolor <span class="text-uppercase">sit</span> amet...';
+    const inputText = '**Lorem** ipsum dolor ~up~sit~up~ amet...';
+    const outputText = '**Lorem** ipsum dolor <span class="text-uppercase">sit</span> amet...';
 
     expect(tpl.atob(inputText)).toEqual(outputText);
     expect(tpl.btoa(outputText)).toEqual(inputText);
@@ -250,7 +250,7 @@ describe('template: pick / omit', () => {
     const tpl = new Template();
 
     expect(
-      tpl.omitTransformation<TemplateTransformations>('abrev', 'bold', 'link').getTransformationsName().length,
+      tpl.omitTransformation<TemplateTransformations>('abbrev', 'bold', 'link').getTransformationsName().length,
     ).toBe(tpl.getTransformationsName().length - 3);
   });
 
