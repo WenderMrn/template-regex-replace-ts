@@ -234,8 +234,10 @@ describe('template: pick / omit', () => {
   it('should be a styled text picked', () => {
     const tpl = new Template().pickTransformation('style');
 
-    const inputText = '~style=[color: red; font-weight: bold]~Lorem~style~ ipsum dolor ~style=[color: #CCC]~sit amet~style~...';
-    const outputText = '<span style="color: red; font-weight: bold">Lorem</span> ipsum dolor <span style="color: #CCC">sit amet</span>...';
+    const inputText =
+      '~style=[color: red; font-weight: bold]~Lorem~style~ ipsum dolor ~style=[color: #CCC]~sit amet~style~...';
+    const outputText =
+      '<span style="color: red; font-weight: bold">Lorem</span> ipsum dolor <span style="color: #CCC">sit amet</span>...';
 
     expect(tpl.atob(inputText)).toEqual(outputText);
     expect(tpl.btoa(outputText)).toEqual(inputText);

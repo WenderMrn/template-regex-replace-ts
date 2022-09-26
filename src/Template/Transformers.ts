@@ -116,7 +116,6 @@ const link: Transformation = {
         }
 
         output = output.replace(regex, `[$2](${href})`);
-
       } while (regex.test(output));
 
       return output;
