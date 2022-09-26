@@ -73,8 +73,8 @@ describe('template: format', () => {
   it('should be a abbreviated text', () => {
     const tpl = new Template();
 
-    const inputText = `~abbr=[United States of America]~USA~abbr~`;
-    const outText = `<abbr title="United States of America">USA</abbr>`;
+    const inputText = `~abbr=[United States of America]~USA~abbr~ lorem ipsum ~abbr=[Dolor Sit Amet Consectetur]~DSAC~abbr~`;
+    const outText = `<abbr title="United States of America">USA</abbr> lorem ipsum <abbr title="Dolor Sit Amet Consectetur">DSAC</abbr>`;
 
     expect(tpl.atob(inputText)).toEqual(outText);
     expect(tpl.btoa(outText)).toEqual(inputText);
@@ -83,8 +83,28 @@ describe('template: format', () => {
   it('should be bold', () => {
     const tpl = new Template();
 
-    const inputText = 'Lorem ipsum **dolor** sit amet...';
-    const outText = 'Lorem ipsum <b>dolor</b> sit amet...';
+    const inputText = 'Lorem ipsum **dolor** sit **amet consectetur**...';
+    const outText = 'Lorem ipsum <b>dolor</b> sit <b>amet consectetur</b>...';
+
+    expect(tpl.atob(inputText)).toEqual(outText);
+    expect(tpl.btoa(outText)).toEqual(inputText);
+  });
+
+  it('should be italic', () => {
+    const tpl = new Template();
+
+    const inputText = 'Lorem ipsum ~~dolor~~ sit ~~amet consectetur~~...';
+    const outText = 'Lorem ipsum <i>dolor</i> sit <i>amet consectetur</i>...';
+
+    expect(tpl.atob(inputText)).toEqual(outText);
+    expect(tpl.btoa(outText)).toEqual(inputText);
+  });
+
+  it('should be underline', () => {
+    const tpl = new Template();
+
+    const inputText = 'Lorem ipsum ___*dolor*___ sit ___*amet consectetur*___...';
+    const outText = 'Lorem ipsum <u>dolor</u> sit <u>amet consectetur</u>...';
 
     expect(tpl.atob(inputText)).toEqual(outText);
     expect(tpl.btoa(outText)).toEqual(inputText);
@@ -103,8 +123,8 @@ describe('template: format', () => {
   it('should be link target blank', () => {
     const tpl = new Template();
 
-    const inputText = 'Lorem ipsum [dolor](https://www.lipsum.com/){"target": "_blank"} sit amet...';
-    const outText = 'Lorem ipsum <a href="https://www.lipsum.com/" target="_blank">dolor</a> sit amet...';
+    const inputText = 'Lorem ipsum [dolor](https://www.lipsum.com/){"target": "_blank"} ~~sit amet~~...';
+    const outText = 'Lorem ipsum <a href="https://www.lipsum.com/" target="_blank">dolor</a> <i>sit amet</i>...';
 
     expect(tpl.atob(inputText)).toEqual(outText);
     expect(tpl.btoa(outText)).toEqual(inputText);
@@ -114,9 +134,9 @@ describe('template: format', () => {
     const tpl = new Template();
 
     const inputText =
-      'Lorem ipsum [dolor](https://www.lipsum.com/){"target": "_blank", "class": "green", "id": "lorem-1"} sit amet...';
+      'Lorem ipsum [dolor](https://www.lipsum.com/){"target": "_blank", "class": "green", "id": "lorem-1"} sit [amet link](https://www.lipsum.com/){"target": "_blank"}...';
     const outText =
-      'Lorem ipsum <a href="https://www.lipsum.com/" target="_blank" class="green" id="lorem-1">dolor</a> sit amet...';
+      'Lorem ipsum <a href="https://www.lipsum.com/" target="_blank" class="green" id="lorem-1">dolor</a> sit <a href="https://www.lipsum.com/" target="_blank">amet link</a>...';
 
     expect(tpl.atob(inputText)).toEqual(outText);
     expect(tpl.btoa(outText)).toEqual(inputText);
@@ -125,8 +145,8 @@ describe('template: format', () => {
   it('should be a deleted text', () => {
     const tpl = new Template();
 
-    const inputText = '~del~Lorem~del~ ipsum dolor sit amet...';
-    const outputText = '<del>Lorem</del> ipsum dolor sit amet...';
+    const inputText = '~del~Lorem~del~ ipsum ~del~dolor~del~ sit amet...';
+    const outputText = '<del>Lorem</del> ipsum <del>dolor</del> sit amet...';
 
     expect(tpl.atob(inputText)).toEqual(outputText);
     expect(tpl.btoa(outputText)).toEqual(inputText);
@@ -135,8 +155,8 @@ describe('template: format', () => {
   it('should be a subscript text', () => {
     const tpl = new Template();
 
-    const inputText = '~sub~Lorem~sub~ ipsum dolor sit amet...';
-    const outputText = '<sub>Lorem</sub> ipsum dolor sit amet...';
+    const inputText = '~sub~Lorem~sub~ ipsum dolor ~sub~sit~sub~ amet...';
+    const outputText = '<sub>Lorem</sub> ipsum dolor <sub>sit</sub> amet...';
 
     expect(tpl.atob(inputText)).toEqual(outputText);
     expect(tpl.btoa(outputText)).toEqual(inputText);
@@ -145,8 +165,8 @@ describe('template: format', () => {
   it('should be a superscript text', () => {
     const tpl = new Template();
 
-    const inputText = '~sup~Lorem~sup~ ipsum dolor sit amet...';
-    const outputText = '<sup>Lorem</sup> ipsum dolor sit amet...';
+    const inputText = '~sup~Lorem~sup~ ipsum dolor ~sup~sit~sup~ amet...';
+    const outputText = '<sup>Lorem</sup> ipsum dolor <sup>sit</sup> amet...';
 
     expect(tpl.atob(inputText)).toEqual(outputText);
     expect(tpl.btoa(outputText)).toEqual(inputText);
@@ -214,8 +234,8 @@ describe('template: pick / omit', () => {
   it('should be a styled text picked', () => {
     const tpl = new Template().pickTransformation('style');
 
-    const inputText = '~style=[color: red; font-weight: bold]~Lorem~style~ ipsum dolor sit amet...';
-    const outputText = '<span style="color: red; font-weight: bold">Lorem</span> ipsum dolor sit amet...';
+    const inputText = '~style=[color: red; font-weight: bold]~Lorem~style~ ipsum dolor ~style=[color: #CCC]~sit amet~style~...';
+    const outputText = '<span style="color: red; font-weight: bold">Lorem</span> ipsum dolor <span style="color: #CCC">sit amet</span>...';
 
     expect(tpl.atob(inputText)).toEqual(outputText);
     expect(tpl.btoa(outputText)).toEqual(inputText);

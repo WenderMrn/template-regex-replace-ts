@@ -3,11 +3,13 @@ import { Transformation, SimpleTagOption, MapTransformation } from './types';
 function simpleTagTransformation({ tagName, symbol, markdown }: SimpleTagOption): Transformation {
   return {
     atob: {
-      from: RegExp(`${symbol}${markdown}${symbol}(.+)${symbol}${markdown}${symbol}`, 'g'),
+      // eslint-disable-next-line no-useless-escape
+      from: RegExp(`${symbol}${markdown}${symbol}([\\s\\S]*?)${symbol}${markdown}${symbol}`, 'g'),
       to: `<${tagName}>$1</${tagName}>`,
     },
     btoa: {
-      from: RegExp(`<${tagName}>(.+)</${tagName}>`, 'g'),
+      // eslint-disable-next-line no-useless-escape
+      from: RegExp(`<${tagName}>([\\s\\S]*?)</${tagName}>`, 'g'),
       to: `${symbol}${markdown}${symbol}$1${symbol}${markdown}${symbol}`,
     },
   };
@@ -15,11 +17,11 @@ function simpleTagTransformation({ tagName, symbol, markdown }: SimpleTagOption)
 
 const bold: Transformation = {
   atob: {
-    from: /\*\*(.+)\*\*/g,
+    from: /\*\*([\s\S]*?)\*\*/g,
     to: '<b>$1</b>',
   },
   btoa: {
-    from: /<b>(.+)<\/b>/g,
+    from: /<b>([\s\S]*?)<\/b>/g,
     to: '**$1**',
   },
 };
@@ -48,11 +50,11 @@ const tab: Transformation = {
 
 const italic: Transformation = {
   atob: {
-    from: /~~(.+)~~/g,
+    from: /~~([\s\S]*?)~~/g,
     to: '<i>$1</i>',
   },
   btoa: {
-    from: /<i>(.+)<\/i>/g,
+    from: /<i>([\s\S]*?)<\/i>/g,
     to: '~~$1~~',
   },
 };
@@ -60,71 +62,86 @@ const italic: Transformation = {
 const link: Transformation = {
   atob: {
     replace: (text: string) => {
-      const regex = /\[(.+)\]\((.+)\)(?:\{(.+)\})?/g;
-      const matchs = regex.exec(text) || [];
+      let output = text;
+      const regex = /\[([\s\S]*?)\]\((\S*)\)(?:{(?<={)([\s\S]*?)(?=})})?/;
+      do {
+        const matchs = regex.exec(output) || [];
 
-      if (matchs[3]) {
-        const attrsStr = `{${matchs[3]}}`;
-        try {
-          const obj = JSON.parse(attrsStr);
-          const attrs = Object.keys(obj)
-            .map((name) => `${name}="${obj[name]}"`)
-            .join(' ');
+        if (matchs[3]) {
+          const attrsStr = `{${matchs[3]}}`;
 
-          return text.replace(regex, `<a href="$2" ${attrs}>$1</a>`);
-        } catch (e) {
-          console.error(e);
+          try {
+            const obj = JSON.parse(attrsStr);
+            const attrs = Object.keys(obj)
+              .map((name) => `${name}="${obj[name]}"`)
+              .join(' ');
+
+            if (attrs) {
+              output = output.replace(regex, `<a href="$2" ${attrs}>$1</a>`);
+              continue;
+            }
+          } catch (e) {
+            console.error(e);
+          }
         }
-      }
 
-      return text.replace(regex, `<a href="$2">$1</a>`);
+        output = output.replace(regex, `<a href="$2">$1</a>`);
+      } while (regex.test(output));
+
+      return output;
     },
   },
   btoa: {
     replace: (text: string) => {
-      const regex = /<a(.+)>(.+)<\/a>/g;
-      const matchs = regex.exec(text) || [];
+      let output = text;
+      const regex = /<a([\s\S]*?)>([\s\S]*?)<\/a>/;
+      do {
+        const matchs = regex.exec(output) || [];
+        const listAttrs = matchs[1]?.trim()?.split(' ') || [];
+        const href = listAttrs.find((a) => a.includes('href'))?.replace(/(href=)|[|"|']/g, '') || '';
 
-      const listAttrs = matchs[1]?.trim()?.split(' ') || [];
-      const href = listAttrs.find((a) => a.includes('href'))?.replace(/(href=)|[|"|']/g, '') || '';
+        const attrs = listAttrs
+          .filter((a) => !a.includes('href'))
+          .map((item) => {
+            return item
+              .split('=')
+              .map((a) => (!/['|"]/g.test(a) ? `"${a}"` : a))
+              .join(': ');
+          })
+          .join(', ');
 
-      const attrs = listAttrs
-        .filter((a) => !a.includes('href'))
-        .map((item) => {
-          return item
-            .split('=')
-            .map((a) => (!/['|"]/g.test(a) ? `"${a}"` : a))
-            .join(': ');
-        })
-        .join(', ');
+        if (attrs) {
+          output = output.replace(regex, `[$2](${href}){${attrs}}`);
+          continue;
+        }
 
-      if (attrs) {
-        return text.replace(regex, `[$2](${href}){${attrs}}`);
-      }
+        output = output.replace(regex, `[$2](${href})`);
 
-      return text.replace(regex, `[$2](${href})`);
+      } while (regex.test(output));
+
+      return output;
     },
   },
 };
 
 const underline: Transformation = {
   atob: {
-    from: /___\*(.+)\*___/g,
+    from: /___\*([\s\S]*?)\*___/g,
     to: '<u>$1</u>',
   },
   btoa: {
-    from: /<u>(.+)<\/u>/g,
+    from: /<u>([\s\S]*?)<\/u>/g,
     to: '___*$1*___',
   },
 };
 
 const style: Transformation = {
   atob: {
-    from: /~style=\[(.+)\]~(.+)~style~/g,
+    from: /~style=\[([\s\S]*?)\]~([\s\S]*?)~style~/g,
     to: '<span style="$1">$2</span>',
   },
   btoa: {
-    from: /<span style="(.+)">(.+)<\/span>/g,
+    from: /<span style="([\s\S]*?)">([\s\S]*?)<\/span>/g,
     to: '~style=[$1]~$2~style~',
   },
 };
@@ -153,11 +170,11 @@ const titles: Transformation = {
 
 const abbrev: Transformation = {
   atob: {
-    from: /~abbr=\[(.+)\]~(.+)~abbr~/g,
+    from: /~abbr=\[([\s\S]*?)\]~([\s\S]*?)~abbr~/g,
     to: '<abbr title="$1">$2</abbr>',
   },
   btoa: {
-    from: /<abbr title="(.+)">(.+)<\/abbr>/g,
+    from: /<abbr title="([\s\S]*?)">([\s\S]*?)<\/abbr>/g,
     to: '~abbr=[$1]~$2~abbr~',
   },
 };
