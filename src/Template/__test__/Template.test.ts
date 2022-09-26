@@ -33,8 +33,8 @@ describe('template: clear / reset / replace / add', () => {
       },
     });
 
-    const inputText = '*Lorem** Ipsum\n\n___*industry*___';
-    const outText = '*Lorem** Ipsum<br/><br/>___*industry*___';
+    const inputText = '**Lorem** Ipsum\n\n___*industry*___';
+    const outText = '**Lorem** Ipsum<br/><br/>___*industry*___';
 
     expect(tpl.atob(inputText)).toEqual(outText);
     expect(tpl.btoa(outText)).toEqual(inputText);
@@ -200,7 +200,7 @@ describe('template: format', () => {
     const outputText = '<h1>Title One</h1> <h2>Title Two</h2> ... <h6>Title Six</h6>';
 
     expect(tpl.atob(inputText)).toEqual(outputText);
-    expect(tpl.btoa(outputText)).toEqual(outputText);
+    expect(tpl.btoa(outputText)).toEqual(inputText);
   });
 });
 
@@ -281,10 +281,9 @@ describe('template: pick / omit', () => {
 
     const inputText = 't1{Title One} **Omitted** ---';
     const outputText = '<h1>Title One</h1> **Omitted** <hr/>';
-    const outputText2 = '<h1>Title One</h1> **Omitted** ---';
 
     expect(tpl.atob(inputText)).toEqual(outputText);
-    expect(tpl.btoa(outputText)).toEqual(outputText2);
+    expect(tpl.btoa(outputText)).toEqual(inputText);
   });
 
   it('should be omit one or more transformations (TS)', () => {
@@ -292,9 +291,8 @@ describe('template: pick / omit', () => {
 
     const inputText = 't1{Title One} **Omitted** ---';
     const outputText = '<h1>Title One</h1> **Omitted** <hr/>';
-    const outputText2 = '<h1>Title One</h1> **Omitted** ---';
 
     expect(tpl.atob(inputText)).toEqual(outputText);
-    expect(tpl.btoa(outputText)).toEqual(outputText2);
+    expect(tpl.btoa(outputText)).toEqual(inputText);
   });
 });
