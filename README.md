@@ -37,7 +37,7 @@ tpl.omitTransformation<TemplateTransformations>("italic", ...) //Same tpl.omitTr
 tpl.omitTransformation<TemplateTransformations | 'custom'>("custom", ...) // Same tpl.omitTransformation<...>(...) but checks types omitted and accept others custom types (TS) 
 ```
 
-default rules
+example default rules
 
 ```ts
 const bold: Transformation = {
@@ -81,28 +81,6 @@ const italic: Transformation = {
   btoa: {
     from: /<i>(.+)<\/i>/g,
     to: '~~$1~~',
-  },
-};
-
-const link: Transformation = {
-  atob: {
-    from: /\[(.+)\]\((.+)\)/g,
-    to: '<a href="$2">$1</a>',
-  },
-  btoa: {
-    from: /<a href="(.+)">(.+)<\/a>/g,
-    to: '/[$2]/($1)/g',
-  },
-};
-
-const underline: Transformation = {
-  atob: {
-    from: /___\*(.+)\*___/g,
-    to: '<u>$1</u>',
-  },
-  btoa: {
-    from: /<u>(.+)<\/u>/g,
-    to: '___*$1*___',
   },
 };
 ```
