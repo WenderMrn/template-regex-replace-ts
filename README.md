@@ -3,10 +3,6 @@
 This projete is a simple scheme to replace strings part as like a markdown work.
 For example: You can use it to create a textarea element in your form and after render a elements with html formatting and etc.
 
-### Requirements
-
-- Typescript >= 4.5.5
-
 ### Demo Applications
 
 - <a href="https://codesandbox.io/s/react-template-replace-ts-demo-b97u4t" target="_blank">React</a>
@@ -34,7 +30,7 @@ tpl.pickTransformation<TemplateTransformations | 'custom'>('custom', ...); // Sa
 
 tpl.omitTransformation("italic", ...) // Omit one or more transformations you don't want use on atob or btoa methods
 tpl.omitTransformation<TemplateTransformations>("italic", ...) //Same tpl.omitTransformation(...) but checks types omitted (TS)
-tpl.omitTransformation<TemplateTransformations | 'custom'>("custom", ...) // Same tpl.omitTransformation<...>(...) but checks types omitted and accept others custom types (TS) 
+tpl.omitTransformation<TemplateTransformations | 'custom'>("custom", ...) // Same tpl.omitTransformation<...>(...) but checks types omitted and accept others custom types (TS)
 ```
 
 example default rules
@@ -195,31 +191,31 @@ import Template from '@wendermrn/template-replace-ts';
 const tpl = new Template().addTransform({
   underline: {
     atob: {
-      from: /___\*(.+)\*___/g,
+      from: /___\*([\s\S]*?])\*___/g,
       to: '<u>$1</u>',
     },
     btoa: {
-      from: /<u>(.+)<\/u>/g,
+      from: /<u>([\s\S]*?])<\/u>/g,
       to: '___*$1*___',
     },
   },
   uppercase: {
     atob: {
-      from: /~up~(.+)~up~/g,
+      from: /~up~([\s\S]*?])~up~/g,
       to: `<span class="text-uppercase">$1</span>`,
     },
     btoa: {
-      from: /<span class="text-uppercase">(.+)<\/span>/g,
+      from: /<span class="text-uppercase">([\s\S]*?])<\/span>/g,
       to: '~up~$1~up~',
     },
   },
   // custom replace function
   abbrev: {
     atob: {
-      replace: (text: string) => text.replace(/~abbr=\[(.+)\]~(.+)~abbr~/g, `<abbr title="$1">$2</abbr>`),
+      replace: (text: string) => text.replace(/~abbr=\[([\s\S]*?])\]~([\s\S]*?)~abbr~/g, `<abbr title="$1">$2</abbr>`),
     },
     btoa: {
-      from: /<abbr title\="(.+)">(.+)<\/abbr>/g,
+      from: /<abbr title\="([\s\S]*?)">([\s\S]*?)<\/abbr>/g,
       to: '~abbr=[$2]~$1~abbr~',
     },
   },
@@ -245,11 +241,11 @@ import Template from '@wendermrn/template-replace-ts';
 const tpl = new Template().replaceTransformations({
   uppercase: {
     atob: {
-      from: /~sm~(.+)~sm~/g,
+      from: /~sm~([\s\S]*?)~sm~/g,
       to: `<small>$1</small>`,
     },
     btoa: {
-      from: /<span class="text-uppercase">(.+)<\/span>/g,
+      from: /<span class="text-uppercase">([\s\S]*?)<\/span>/g,
       to: '~sm~$1~sm~',
     },
   },
