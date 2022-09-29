@@ -1,5 +1,10 @@
 # Template Regex Replace
 
+[![NPM](https://nodei.co/npm/@wendermrn/template-replace-ts.png?mini=true)](https://npmjs.org/package/@wendermrn/template-replace-ts)
+[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+![GitHub CI](https://github.com/dwyl/auth_plug/actions/workflows/ci.yml/badge.svg)
+
+
 This projete is a simple scheme to replace strings part as like a markdown work.
 For example: You can use it to create a textarea element in your form and after render a elements with html formatting and etc.
 
@@ -24,7 +29,7 @@ tpl.addTransform(transformation); // add new transformation rule into existing r
 tpl.clearTransformations(); // clear all transformations rules from the instance
 tpl.resetTransformation() // reset transformations to default values
 
-tpl.pickTransformation('bold', ...); // select on or more transformation to apply on atob or btoa]
+tpl.pickTransformation('bold', ...); // select one or more transformation to apply on atob or btoa
 tpl.pickTransformation<TemplateTransformations>('bold', ...); // Same as tpl.pickTransformation(...) but checks types picked (TS)
 tpl.pickTransformation<TemplateTransformations | 'custom'>('custom', ...); // Same as tpl.pickTransformation<...>(...) but checks types picked and accept others custom types (TS)
 
