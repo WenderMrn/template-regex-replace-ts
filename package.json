@@ -26,6 +26,7 @@
     "prepare": "husky install,",
     "postversion": "git push && git push --tags",
     "lint": "eslint . --ext .ts",
+    "lint-fix": "npx eslint . --fix",
     "test": "jest"
   },
   "repository": {
