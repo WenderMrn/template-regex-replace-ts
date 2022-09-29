@@ -1,4 +1,5 @@
-export default {
+// eslint-disable-next-line no-undef
+module.exports = {
     branches: [
       'main',
       {
@@ -25,4 +26,4 @@ export default {
         }
       ]
     ]
-  }
+}
