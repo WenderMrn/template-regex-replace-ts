@@ -3,12 +3,10 @@ import { Transformation, SimpleTagOption, MapTransformation } from './types';
 function simpleTagTransformation({ tagName, symbol, markdown }: SimpleTagOption): Transformation {
   return {
     atob: {
-      // eslint-disable-next-line no-useless-escape
       from: RegExp(`${symbol}${markdown}${symbol}([\\s\\S]*?)${symbol}${markdown}${symbol}`, 'g'),
       to: `<${tagName}>$1</${tagName}>`,
     },
     btoa: {
-      // eslint-disable-next-line no-useless-escape
       from: RegExp(`<${tagName}>([\\s\\S]*?)</${tagName}>`, 'g'),
       to: `${symbol}${markdown}${symbol}$1${symbol}${markdown}${symbol}`,
     },

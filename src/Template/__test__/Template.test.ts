@@ -65,7 +65,7 @@ describe('template: clear / reset / replace / add', () => {
     const tpl = new Template();
 
     expect(tpl.clearTransformations().getTransformationsName().length).toBe(0);
-    expect(tpl.resetTransformation().getTransformationsName().length).toBeGreaterThan(0);
+    expect(tpl.resetTransformations().getTransformationsName().length).toBeGreaterThan(0);
   });
 });
 

@@ -124,8 +124,17 @@ class Template {
   /**
    * Reset transformation to default values
    * @returns Template instance
+   * @deprecated Please use resetTransformations
    */
   public resetTransformation() {
+    return this.resetTransformations();
+  }
+
+  /**
+   * Reset transformations to default values
+   * @returns Template instance
+   */
+  public resetTransformations() {
     this.mapTransformation = Transformers;
     return this;
   }
