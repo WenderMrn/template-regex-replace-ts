@@ -35,28 +35,28 @@ declare class Template {
      * @param transformations
      * @returns
      */
-    addTransform<T extends MapTransformation[]>(...transformations: T): this;
+    addTransform<T extends MapTransformation[]>(...transformations: T): Template;
     /**
      * Replace all transformations default by the transformations passed by.
      * @param transformations
      * @returns
      */
-    replaceTransformations<T extends MapTransformation>(transformations: T): this;
+    replaceTransformations<T extends MapTransformation>(transformations: T): Template;
     /**
      * Clears all transformations and return a Template instance
      * @returns Template instance
      */
-    clearTransformations(): this;
+    clearTransformations(): Template;
     /**
      * Reset transformation to default values
      * @returns Template instance
      * @deprecated Please use resetTransformations
      */
-    resetTransformation(): this;
+    resetTransformation(): Template;
     /**
      * Reset transformations to default values
      * @returns Template instance
      */
-    resetTransformations(): this;
+    resetTransformations(): Template;
 }
 export default Template;

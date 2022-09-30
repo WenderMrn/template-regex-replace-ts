@@ -13,13 +13,14 @@ var types_1 = require("./types");
 var Transformers_1 = require("./Transformers");
 var Template = /** @class */ (function () {
     function Template() {
+        this.mapTransformation = {};
         this.mapTransformation = Transformers_1["default"];
     }
     Template.prototype.replaceText = function (text, type) {
         if (!text)
             return text;
         var output = text;
-        var keys = Object.keys(this.mapTransformation);
+        var keys = this.getTransformationsName();
         for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
             var name = keys_1[_i];
             var t = this.mapTransformation[name];

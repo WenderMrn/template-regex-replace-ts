@@ -1,3 +1,10 @@
+# [1.5.0-beta.3](https://github.com/WenderMrn/template-regex-replace-ts/compare/v1.5.0-beta.2...v1.5.0-beta.3) (2022-09-30)
+
+
+### Features
+
+* **transformations:** add new transformations: paragraph and lists ([8ebfb05](https://github.com/WenderMrn/template-regex-replace-ts/commit/8ebfb05c661956a1563ce8e7368c83da4d2ab99d))
+
 # [1.5.0-beta.2](https://github.com/WenderMrn/template-regex-replace-ts/compare/v1.5.0-beta.1...v1.5.0-beta.2) (2022-09-29)
 
 

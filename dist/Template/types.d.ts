@@ -1,5 +1,6 @@
 declare type RuleItem = RegExp | string;
-export declare type TemplateTransformations = 'bold' | 'newLine' | 'tab' | 'italic' | 'link' | 'underline' | 'style' | 'deleted' | 'subscript' | 'superscript' | 'horizontalRule' | 'titles' | 'abbrev';
+export declare const ALL_TEMPLATE_TRANSFORMATIONS: readonly ["bold", "newLine", "tab", "italic", "link", "underline", "style", "deleted", "subscript", "superscript", "horizontalRule", "titles", "abbrev", "paragraph", "lists"];
+export declare type TemplateTransformations = typeof ALL_TEMPLATE_TRANSFORMATIONS[number];
 export declare type CustomTypesTransformations<T> = TemplateTransformations | T;
 export interface Rule {
     from?: RuleItem;
@@ -19,5 +20,5 @@ export interface SimpleTagOption {
     symbol: string;
     markdown: string;
 }
-export declare type MapTransformation = Record<CustomTypesTransformations<string>, Transformation>;
+export declare type MapTransformation<T extends CustomTypesTransformations<string> = CustomTypesTransformations<string>> = Record<T, Transformation>;
 export {};

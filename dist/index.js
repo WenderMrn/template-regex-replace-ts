@@ -11,7 +11,9 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 exports.__esModule = true;
-exports["default"] = void 0;
+exports.ALL_TEMPLATE_TRANSFORMATIONS = exports["default"] = void 0;
 var Template_1 = require("./Template");
 __createBinding(exports, Template_1, "default");
+var types_1 = require("./Template/types");
+__createBinding(exports, types_1, "ALL_TEMPLATE_TRANSFORMATIONS");
 //# sourceMappingURL=index.js.map

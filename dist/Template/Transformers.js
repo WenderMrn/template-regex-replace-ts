@@ -162,6 +162,40 @@ var abbrev = {
         to: '~abbr=[$1]~$2~abbr~'
     }
 };
+var paragraph = {
+    atob: {
+        from: /p{(?<=p{)([\s\S]*?)(?=})}/g,
+        to: '<p>$1</p>'
+    },
+    btoa: {
+        from: /<p>(?<=<p>)([\s\S]*?)(?=<\/p>)<\/p>/g,
+        to: 'p{$1}'
+    }
+};
+var lists = {
+    atob: {
+        replace: function (text) {
+            var _a;
+            var regex = /([u|o]l)\[(?<=[u|o]l\[)([\s\S]*?)(?=\])\]/g;
+            if (!regex.test(text))
+                return text;
+            var matchs = regex.exec(text) || [];
+            var items = ((_a = matchs[2]) === null || _a === void 0 ? void 0 : _a.trim().split('||')) || [];
+            return text.replace(regex, "<$1>".concat(items.map(function (item) { return "<li>".concat(item, "</li>"); }).join(''), "</$1>"));
+        }
+    },
+    btoa: {
+        replace: function (text) {
+            var _a, _b;
+            var regex = /<([u|o]l)>(<li>[\s\S]*?<\/li>)<\/[u|o]l>/g;
+            if (!regex.test(text))
+                return text;
+            var matchs = regex.exec(text) || [];
+            var items = ((_b = (_a = matchs[2]) === null || _a === void 0 ? void 0 : _a.split(/<li>([\s\S]*?)<\/li>/g)) === null || _b === void 0 ? void 0 : _b.filter(function (i) { return i; }).join('||')) || '';
+            return text.replace(regex, "$1[".concat(items, "]"));
+        }
+    }
+};
 // Simple tags
 var deleted = simpleTagTransformation({ tagName: 'del', markdown: 'del', symbol: '~' });
 var subscript = simpleTagTransformation({ tagName: 'sub', markdown: 'sub', symbol: '~' });
@@ -179,7 +213,9 @@ var transformations = {
     superscript: superscript,
     horizontalRule: horizontalRule,
     titles: titles,
-    abbrev: abbrev
+    abbrev: abbrev,
+    paragraph: paragraph,
+    lists: lists
 };
 exports["default"] = transformations;
 //# sourceMappingURL=Transformers.js.map
