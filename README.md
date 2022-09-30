@@ -174,7 +174,7 @@ transformations: [
   </tr>
    <tr>
     <td>lists (unordered)</td> 
-    <td>ol[Item One||Item Two||Item Six]</td> 
+    <td>ul[Item One||Item Two||Item Six]</td> 
     <td><ul><li>Item One</li><li>Item Two</li><li>Item Six</li></ul></td>
   </tr>
 </table>
