@@ -1,3 +1,10 @@
+# [1.5.0-beta.2](https://github.com/WenderMrn/template-regex-replace-ts/compare/v1.5.0-beta.1...v1.5.0-beta.2) (2022-09-29)
+
+
+### Features
+
+* **script:** coverage badges ([15c4052](https://github.com/WenderMrn/template-regex-replace-ts/commit/15c405240ccee4a2ab83619ba8f5ea729d3966e3))
+
 # [1.5.0-beta.1](https://github.com/WenderMrn/template-regex-replace-ts/compare/v1.4.4...v1.5.0-beta.1) (2022-09-29)
 
 
