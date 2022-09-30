@@ -265,13 +265,13 @@ import Template from '@wendermrn/template-replace-ts';
 
 // replace transformations
 const tpl = new Template().replaceTransformations({
-  uppercase: {
+  lowercase: {
     atob: {
       from: /~sm~([\s\S]*?)~sm~/g,
       to: `<small>$1</small>`,
     },
     btoa: {
-      from: /<span class="text-uppercase">([\s\S]*?)<\/span>/g,
+      from: /<span class="text-lowercase">([\s\S]*?)<\/span>/g,
       to: '~sm~$1~sm~',
     },
   },
