@@ -29,7 +29,7 @@ tpl.btoa(text); // turns HTML tags into markdown according to the rules
 tpl.replaceTransformations(transformation); // replace all transformation
 tpl.addTransform(transformation); // add new transformation rule into existing rules
 tpl.clearTransformations(); // clear all transformations rules from the instance
-tpl.resetTransformation() // reset transformations to default values
+tpl.resetTransformations() // reset transformations to default values
 
 tpl.pickTransformation('bold', ...); // select one or more transformation to apply on atob or btoa
 tpl.pickTransformation<TemplateTransformations>('bold', ...); // Same as tpl.pickTransformation(...) but checks types picked (TS)
@@ -88,10 +88,14 @@ const italic: Transformation = {
 };
 ```
 
-### Defaut Transformations Examples
+### Default Transformations Examples
 
 ```
-transformations: ['bold' , 'newLine', 'tab', 'italic', 'link', 'underline' ,'style', 'deleted', 'subscript', 'superscript','horizontalRule', 'titles', 'abbrev']
+transformations: [
+  'bold' , 'newLine', 'tab', 'italic', 'link', 'underline',
+  'style', 'deleted', 'subscript', 'superscript','horizontalRule',
+  'titles', 'abbrev', 'paragraph', 'lists'
+]
 ```
 
 <html>
@@ -157,6 +161,21 @@ transformations: ['bold' , 'newLine', 'tab', 'italic', 'link', 'underline' ,'sty
     <td>titles</td> 
     <td>t1{Title One} t2{Title Two} ... t6{Title Six}</td> 
     <td><h1>Title One</h1><h4>Title Two</h4><h6>Title Six</h6></td>
+  </tr>
+  <tr>
+    <td>paragraph</td> 
+    <td>p{Paragraph One} p{Paragraph Two} ... p{Paragraph Six}</td> 
+    <td><p>Paragraph One</p><p>Paragraph Two</p> ... <p>Paragraph Six</p></td>
+  </tr>
+  <tr>
+    <td>lists (ordered)</td> 
+    <td>ol[Item One||Item Two||Item Six]</td> 
+    <td><ol><li>Item One</li><li>Item Two</li><li>Item Six</li></ol></td>
+  </tr>
+   <tr>
+    <td>lists (unordered)</td> 
+    <td>ol[Item One||Item Two||Item Six]</td> 
+    <td><ul><li>Item One</li><li>Item Two</li><li>Item Six</li></ul></td>
   </tr>
 </table>
 </html>
