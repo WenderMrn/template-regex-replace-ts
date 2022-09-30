@@ -187,7 +187,7 @@ const paragraph: Transformation = {
   },
 };
 
-const list: Transformation = {
+const lists: Transformation = {
   atob: {
     replace: (text: string) => {
       const regex = /([u|o]l)\[(?<=[u|o]l\[)([\s\S]*?)(?=\])\]/g;
@@ -238,7 +238,7 @@ const transformations: MapTransformation<TemplateTransformations> = {
   titles,
   abbrev,
   paragraph,
-  list,
+  lists,
 };
 
 export default transformations;
