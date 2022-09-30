@@ -1,19 +1,24 @@
 type RuleItem = RegExp | string;
 
-export type TemplateTransformations =
-  | 'bold'
-  | 'newLine'
-  | 'tab'
-  | 'italic'
-  | 'link'
-  | 'underline'
-  | 'style'
-  | 'deleted'
-  | 'subscript'
-  | 'superscript'
-  | 'horizontalRule'
-  | 'titles'
-  | 'abbrev';
+export const ALL_TEMPLATE_TRANSFORMATIONS = [
+  'bold',
+  'newLine',
+  'tab',
+  'italic',
+  'link',
+  'underline',
+  'style',
+  'deleted',
+  'subscript',
+  'superscript',
+  'horizontalRule',
+  'titles',
+  'abbrev',
+  'paragraph',
+  'lists',
+] as const;
+
+export type TemplateTransformations = typeof ALL_TEMPLATE_TRANSFORMATIONS[number];
 
 export type CustomTypesTransformations<T> = TemplateTransformations | T;
 export interface Rule {
@@ -38,4 +43,5 @@ export interface SimpleTagOption {
   markdown: string;
 }
 
-export type MapTransformation = Record<CustomTypesTransformations<string>, Transformation>;
+export type MapTransformation<T extends CustomTypesTransformations<string> = CustomTypesTransformations<string>> =
+  Record<T, Transformation>;

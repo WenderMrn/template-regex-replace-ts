@@ -1,6 +1,13 @@
 # Template Regex Replace
 
-This projete is a simple scheme to replace strings part as like a markdown work.
+[![NPM](https://nodei.co/npm/@wendermrn/template-replace-ts.png?mini=true)](https://npmjs.org/package/@wendermrn/template-replace-ts)
+[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+
+| Statements                  | Branches                | Functions                 | Lines             |
+| --------------------------- | ----------------------- | ------------------------- | ----------------- |
+| ![Statements](https://img.shields.io/badge/statements-96.34%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-93.33%25-brightgreen.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-95%25-brightgreen.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-97.5%25-brightgreen.svg?style=flat) |
+
+This project is a simple scheme to replace strings part as like a markdown work.
 For example: You can use it to create a textarea element in your form and after render a elements with html formatting and etc.
 
 ### Demo Applications
@@ -22,9 +29,9 @@ tpl.btoa(text); // turns HTML tags into markdown according to the rules
 tpl.replaceTransformations(transformation); // replace all transformation
 tpl.addTransform(transformation); // add new transformation rule into existing rules
 tpl.clearTransformations(); // clear all transformations rules from the instance
-tpl.resetTransformation() // reset transformations to default values
+tpl.resetTransformations() // reset transformations to default values
 
-tpl.pickTransformation('bold', ...); // select on or more transformation to apply on atob or btoa]
+tpl.pickTransformation('bold', ...); // select one or more transformation to apply on atob or btoa
 tpl.pickTransformation<TemplateTransformations>('bold', ...); // Same as tpl.pickTransformation(...) but checks types picked (TS)
 tpl.pickTransformation<TemplateTransformations | 'custom'>('custom', ...); // Same as tpl.pickTransformation<...>(...) but checks types picked and accept others custom types (TS)
 
@@ -81,10 +88,14 @@ const italic: Transformation = {
 };
 ```
 
-### Defaut Transformations Examples
+### Default Transformations Examples
 
 ```
-transformations: ['bold' , 'newLine', 'tab', 'italic', 'link', 'underline' ,'style', 'deleted', 'subscript', 'superscript','horizontalRule', 'titles', 'abbrev']
+transformations: [
+  'bold' , 'newLine', 'tab', 'italic', 'link', 'underline',
+  'style', 'deleted', 'subscript', 'superscript','horizontalRule',
+  'titles', 'abbrev', 'paragraph', 'lists'
+]
 ```
 
 <html>
@@ -150,6 +161,21 @@ transformations: ['bold' , 'newLine', 'tab', 'italic', 'link', 'underline' ,'sty
     <td>titles</td> 
     <td>t1{Title One} t2{Title Two} ... t6{Title Six}</td> 
     <td><h1>Title One</h1><h4>Title Two</h4><h6>Title Six</h6></td>
+  </tr>
+  <tr>
+    <td>paragraph</td> 
+    <td>p{Paragraph One} p{Paragraph Two} ... p{Paragraph Six}</td> 
+    <td><p>Paragraph One</p><p>Paragraph Two</p> ... <p>Paragraph Six</p></td>
+  </tr>
+  <tr>
+    <td>lists (ordered)</td> 
+    <td>ol[Item One||Item Two||Item Six]</td> 
+    <td><ol><li>Item One</li><li>Item Two</li><li>Item Six</li></ol></td>
+  </tr>
+   <tr>
+    <td>lists (unordered)</td> 
+    <td>ol[Item One||Item Two||Item Six]</td> 
+    <td><ul><li>Item One</li><li>Item Two</li><li>Item Six</li></ul></td>
   </tr>
 </table>
 </html>
@@ -239,13 +265,13 @@ import Template from '@wendermrn/template-replace-ts';
 
 // replace transformations
 const tpl = new Template().replaceTransformations({
-  uppercase: {
+  lowercase: {
     atob: {
       from: /~sm~([\s\S]*?)~sm~/g,
       to: `<small>$1</small>`,
     },
     btoa: {
-      from: /<span class="text-uppercase">([\s\S]*?)<\/span>/g,
+      from: /<span class="text-lowercase">([\s\S]*?)<\/span>/g,
       to: '~sm~$1~sm~',
     },
   },

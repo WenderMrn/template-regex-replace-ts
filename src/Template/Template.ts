@@ -2,7 +2,7 @@ import { Transformation, MapTransformation, TypeOperation, CustomTypesTransforma
 import Transformers from './Transformers';
 
 class Template {
-  private mapTransformation: MapTransformation;
+  private mapTransformation: MapTransformation = {};
 
   constructor() {
     this.mapTransformation = Transformers;
@@ -12,7 +12,7 @@ class Template {
     if (!text) return text;
 
     let output = text;
-    const keys = Object.keys(this.mapTransformation);
+    const keys = this.getTransformationsName();
 
     for (const name of keys) {
       const t: Transformation = this.mapTransformation[name];
@@ -97,7 +97,7 @@ class Template {
    * @param transformations
    * @returns
    */
-  public addTransform<T extends MapTransformation[]>(...transformations: T) {
+  public addTransform<T extends MapTransformation[]>(...transformations: T): Template {
     this.mapTransformation = Object.assign(this.mapTransformation, ...transformations);
     return this;
   }
@@ -107,7 +107,7 @@ class Template {
    * @param transformations
    * @returns
    */
-  public replaceTransformations<T extends MapTransformation>(transformations: T) {
+  public replaceTransformations<T extends MapTransformation>(transformations: T): Template {
     this.mapTransformation = transformations;
     return this;
   }
@@ -116,7 +116,7 @@ class Template {
    * Clears all transformations and return a Template instance
    * @returns Template instance
    */
-  public clearTransformations() {
+  public clearTransformations(): Template {
     this.mapTransformation = {};
     return this;
   }
@@ -124,8 +124,17 @@ class Template {
   /**
    * Reset transformation to default values
    * @returns Template instance
+   * @deprecated Please use resetTransformations
    */
   public resetTransformation() {
+    return this.resetTransformations();
+  }
+
+  /**
+   * Reset transformations to default values
+   * @returns Template instance
+   */
+  public resetTransformations(): Template {
     this.mapTransformation = Transformers;
     return this;
   }

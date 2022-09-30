@@ -1,14 +1,12 @@
-import { Transformation, SimpleTagOption, MapTransformation } from './types';
+import { Transformation, SimpleTagOption, MapTransformation, TemplateTransformations } from './types';
 
 function simpleTagTransformation({ tagName, symbol, markdown }: SimpleTagOption): Transformation {
   return {
     atob: {
-      // eslint-disable-next-line no-useless-escape
       from: RegExp(`${symbol}${markdown}${symbol}([\\s\\S]*?)${symbol}${markdown}${symbol}`, 'g'),
       to: `<${tagName}>$1</${tagName}>`,
     },
     btoa: {
-      // eslint-disable-next-line no-useless-escape
       from: RegExp(`<${tagName}>([\\s\\S]*?)</${tagName}>`, 'g'),
       to: `${symbol}${markdown}${symbol}$1${symbol}${markdown}${symbol}`,
     },
@@ -178,12 +176,54 @@ const abbrev: Transformation = {
   },
 };
 
+const paragraph: Transformation = {
+  atob: {
+    from: /p{(?<=p{)([\s\S]*?)(?=})}/g,
+    to: '<p>$1</p>',
+  },
+  btoa: {
+    from: /<p>(?<=<p>)([\s\S]*?)(?=<\/p>)<\/p>/g,
+    to: 'p{$1}',
+  },
+};
+
+const lists: Transformation = {
+  atob: {
+    replace: (text: string) => {
+      const regex = /([u|o]l)\[(?<=[u|o]l\[)([\s\S]*?)(?=\])\]/g;
+
+      if (!regex.test(text)) return text;
+
+      const matchs = regex.exec(text) || [];
+      const items = matchs[2]?.trim().split('||') || [];
+
+      return text.replace(regex, `<$1>${items.map((item) => `<li>${item}</li>`).join('')}</$1>`);
+    },
+  },
+  btoa: {
+    replace: (text: string) => {
+      const regex = /<([u|o]l)>(<li>[\s\S]*?<\/li>)<\/[u|o]l>/g;
+
+      if (!regex.test(text)) return text;
+
+      const matchs = regex.exec(text) || [];
+      const items =
+        matchs[2]
+          ?.split(/<li>([\s\S]*?)<\/li>/g)
+          ?.filter((i) => i)
+          .join('||') || '';
+
+      return text.replace(regex, `$1[${items}]`);
+    },
+  },
+};
+
 // Simple tags
 const deleted = simpleTagTransformation({ tagName: 'del', markdown: 'del', symbol: '~' });
 const subscript = simpleTagTransformation({ tagName: 'sub', markdown: 'sub', symbol: '~' });
 const superscript = simpleTagTransformation({ tagName: 'sup', markdown: 'sup', symbol: '~' });
 
-const transformations: MapTransformation = {
+const transformations: MapTransformation<TemplateTransformations> = {
   bold,
   newLine,
   tab,
@@ -197,6 +237,8 @@ const transformations: MapTransformation = {
   horizontalRule,
   titles,
   abbrev,
+  paragraph,
+  lists,
 };
 
 export default transformations;
