@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/WenderMrn/template-regex-replace-ts/compare/v1.5.0...v1.5.1) (2022-09-30)
+
+
+### Bug Fixes
+
+* **lists:** fix bug on list transformations regex ([c22b763](https://github.com/WenderMrn/template-regex-replace-ts/commit/c22b763969ba399cc3cb2b5b056a383a59e21fce))
+
 # [1.5.0](https://github.com/WenderMrn/template-regex-replace-ts/compare/v1.4.4...v1.5.0) (2022-09-30)
 
 

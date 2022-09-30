@@ -232,8 +232,7 @@ describe('Template', () => {
       const tpl = new Template();
 
       const inputText = 'First: ol[Item One||Item Two||Item Six]';
-      const outputText =
-        'First: <ol><li>Item One</li><li>Item Two</li><li>Item Six</li></ol>';
+      const outputText = 'First: <ol><li>Item One</li><li>Item Two</li><li>Item Six</li></ol>';
 
       expect(tpl.atob(inputText)).toEqual(outputText);
       expect(tpl.btoa(outputText)).toEqual(inputText);
@@ -243,8 +242,7 @@ describe('Template', () => {
       const tpl = new Template();
 
       const inputText = 'Second: ul[Item One||Item Two||Item Six]';
-      const outputText =
-        'Second: <ul><li>Item One</li><li>Item Two</li><li>Item Six</li></ul>';
+      const outputText = 'Second: <ul><li>Item One</li><li>Item Two</li><li>Item Six</li></ul>';
 
       expect(tpl.atob(inputText)).toEqual(outputText);
       expect(tpl.btoa(outputText)).toEqual(inputText);

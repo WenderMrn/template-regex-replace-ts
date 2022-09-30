@@ -176,23 +176,31 @@ var lists = {
     atob: {
         replace: function (text) {
             var _a;
-            var regex = /([u|o]l)\[(?<=[u|o]l\[)([\s\S]*?)(?=\])\]/g;
-            if (!regex.test(text))
-                return text;
-            var matchs = regex.exec(text) || [];
-            var items = ((_a = matchs[2]) === null || _a === void 0 ? void 0 : _a.trim().split('||')) || [];
-            return text.replace(regex, "<$1>".concat(items.map(function (item) { return "<li>".concat(item, "</li>"); }).join(''), "</$1>"));
+            var output = text;
+            var regex = /([u|o]l)\[(?<=[u|o]l\[)([\s\S]*?)(?=\])\]/;
+            if (!regex.test(output))
+                return output;
+            do {
+                var matchs = regex.exec(output) || [];
+                var items = ((_a = matchs[2]) === null || _a === void 0 ? void 0 : _a.trim().split('||')) || [];
+                output = output.replace(regex, "<$1>".concat(items.map(function (item) { return "<li>".concat(item, "</li>"); }).join(''), "</$1>"));
+            } while (regex.test(output));
+            return output;
         }
     },
     btoa: {
         replace: function (text) {
             var _a, _b;
-            var regex = /<([u|o]l)>(<li>[\s\S]*?<\/li>)<\/[u|o]l>/g;
-            if (!regex.test(text))
-                return text;
-            var matchs = regex.exec(text) || [];
-            var items = ((_b = (_a = matchs[2]) === null || _a === void 0 ? void 0 : _a.split(/<li>([\s\S]*?)<\/li>/g)) === null || _b === void 0 ? void 0 : _b.filter(function (i) { return i; }).join('||')) || '';
-            return text.replace(regex, "$1[".concat(items, "]"));
+            var output = text;
+            var regex = /<([u|o]l)>(<li>[\s\S]*?<\/li>)<\/[u|o]l>/;
+            if (!regex.test(output))
+                return output;
+            do {
+                var matchs = regex.exec(output) || [];
+                var items = ((_b = (_a = matchs[2]) === null || _a === void 0 ? void 0 : _a.split(/<li>([\s\S]*?)<\/li>/g)) === null || _b === void 0 ? void 0 : _b.filter(function (i) { return i; }).join('||')) || '';
+                output = output.replace(regex, "$1[".concat(items, "]"));
+            } while (regex.test(output));
+            return output;
         }
     }
 };
