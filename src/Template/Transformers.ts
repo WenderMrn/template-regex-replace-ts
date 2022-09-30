@@ -190,30 +190,39 @@ const paragraph: Transformation = {
 const lists: Transformation = {
   atob: {
     replace: (text: string) => {
-      const regex = /([u|o]l)\[(?<=[u|o]l\[)([\s\S]*?)(?=\])\]/g;
+      let output = text;
+      const regex = /([u|o]l)\[(?<=[u|o]l\[)([\s\S]*?)(?=\])\]/;
 
-      if (!regex.test(text)) return text;
+      if (!regex.test(output)) return output;
 
-      const matchs = regex.exec(text) || [];
-      const items = matchs[2]?.trim().split('||') || [];
+      do {
+        const matchs = regex.exec(output) || [];
+        const items = matchs[2]?.trim().split('||') || [];
+        output = output.replace(regex, `<$1>${items.map((item) => `<li>${item}</li>`).join('')}</$1>`);
+      } while (regex.test(output));
 
-      return text.replace(regex, `<$1>${items.map((item) => `<li>${item}</li>`).join('')}</$1>`);
+      return output;
     },
   },
   btoa: {
     replace: (text: string) => {
-      const regex = /<([u|o]l)>(<li>[\s\S]*?<\/li>)<\/[u|o]l>/g;
+      let output = text;
+      const regex = /<([u|o]l)>(<li>[\s\S]*?<\/li>)<\/[u|o]l>/;
 
-      if (!regex.test(text)) return text;
+      if (!regex.test(output)) return output;
 
-      const matchs = regex.exec(text) || [];
-      const items =
-        matchs[2]
-          ?.split(/<li>([\s\S]*?)<\/li>/g)
-          ?.filter((i) => i)
-          .join('||') || '';
+      do {
+        const matchs = regex.exec(output) || [];
+        const items =
+          matchs[2]
+            ?.split(/<li>([\s\S]*?)<\/li>/g)
+            ?.filter((i) => i)
+            .join('||') || '';
 
-      return text.replace(regex, `$1[${items}]`);
+        output = output.replace(regex, `$1[${items}]`);
+      } while (regex.test(output));
+
+      return output;
     },
   },
 };
