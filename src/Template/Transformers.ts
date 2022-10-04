@@ -61,7 +61,10 @@ const link: Transformation = {
   atob: {
     replace: (text: string) => {
       let output = text;
-      const regex = /\[([\s\S]*?)\]\((\S*)\)(?:{(?<={)([\s\S]*?)(?=})})?/;
+      const regex = /(?<!#)\[([\s\S]*?)\]\(([\s\S]*?)\)(?:{(?<={)([\s\S]*?)(?=})})?/;
+
+      if (!regex.test(output)) return output;
+
       do {
         const matchs = regex.exec(output) || [];
 
@@ -93,27 +96,97 @@ const link: Transformation = {
     replace: (text: string) => {
       let output = text;
       const regex = /<a([\s\S]*?)>([\s\S]*?)<\/a>/;
+      const regexAttr = /(\w+)=["']?((?:.(?!["']?\s(?:\S+)=|\s*?[>"']))+.)["']?/;
+
+      if (!regex.test(output)) return output;
+
       do {
         const matchs = regex.exec(output) || [];
-        const listAttrs = matchs[1]?.trim()?.split(' ') || [];
-        const href = listAttrs.find((a) => a.includes('href'))?.replace(/(href=)|[|"|']/g, '') || '';
+        let attrToProcess = matchs[1] || '';
+        const mapAttributes: { [name: string]: string } = {};
 
-        const attrs = listAttrs
-          .filter((a) => !a.includes('href'))
-          .map((item) => {
-            return item
-              .split('=')
-              .map((a) => (!/['|"]/g.test(a) ? `"${a}"` : a))
-              .join(': ');
-          })
-          .join(', ');
-
-        if (attrs) {
-          output = output.replace(regex, `[$2](${href}){${attrs}}`);
-          continue;
+        while (regexAttr.test(attrToProcess)) {
+          const m = regexAttr.exec(attrToProcess) || [];
+          mapAttributes[m[1]] = m[2];
+          attrToProcess = attrToProcess.replace(regexAttr, '');
         }
 
-        output = output.replace(regex, `[$2](${href})`);
+        const { href, ...others } = mapAttributes;
+        const formattedAttributes = Object.entries(others).map(([key, value]) => `"${key}": "${value}"`);
+
+        output = output.replace(
+          regex,
+          `[$2](${href})${formattedAttributes.length ? `{${formattedAttributes.join(', ')}}` : ''}`,
+        );
+      } while (regex.test(output));
+
+      return output;
+    },
+  },
+};
+
+const image: Transformation = {
+  atob: {
+    replace: (text: string) => {
+      let output = text;
+      const regex = /#\[([\s\S]*?)\]\((\S*)\)(?:{(?<={)([\s\S]*?)(?=})})?/;
+
+      if (!regex.test(output)) return output;
+
+      do {
+        const matchs = regex.exec(output) || [];
+
+        if (matchs[3]) {
+          const attrsStr = `{${matchs[3]}}`;
+
+          try {
+            const obj = JSON.parse(attrsStr);
+            const attrs = Object.keys(obj)
+              .map((name) => `${name}="${obj[name]}"`)
+              .join(' ');
+
+            if (attrs) {
+              output = output.replace(regex, `<img src="$2" alt="$1" ${attrs} />`);
+              continue;
+            }
+          } catch (e) {
+            console.error(e);
+          }
+        }
+
+        output = output.replace(regex, `<img src="$2" alt="$1" />`);
+      } while (regex.test(output));
+
+      return output;
+    },
+  },
+  btoa: {
+    replace: (text: string) => {
+      let output = text;
+
+      const regex = /<img([\s\S]*?)\/>/;
+      const regexAttr = /(\w+)=["']?((?:.(?!["']?\s(?:\S+)=|\s*?[>"']))+.)["']?/;
+
+      if (!regex.test(output)) return output;
+
+      do {
+        const matchs = regex.exec(output) || [];
+        let attrToProcess = matchs[1] || '';
+        const mapAttributes: { [name: string]: string } = {};
+
+        while (regexAttr.test(attrToProcess)) {
+          const m = regexAttr.exec(attrToProcess) || [];
+          mapAttributes[m[1]] = m[2];
+          attrToProcess = attrToProcess.replace(regexAttr, '');
+        }
+
+        const { src, alt, ...others } = mapAttributes;
+        const formattedAttributes = Object.entries(others).map(([key, value]) => `"${key}": "${value}"`);
+
+        output = output.replace(
+          regex,
+          `#[${alt}](${src})${formattedAttributes.length ? `{${formattedAttributes.join(', ')}}` : ''}`,
+        );
       } while (regex.test(output));
 
       return output;
@@ -231,6 +304,7 @@ const lists: Transformation = {
 const deleted = simpleTagTransformation({ tagName: 'del', markdown: 'del', symbol: '~' });
 const subscript = simpleTagTransformation({ tagName: 'sub', markdown: 'sub', symbol: '~' });
 const superscript = simpleTagTransformation({ tagName: 'sup', markdown: 'sup', symbol: '~' });
+const small = simpleTagTransformation({ tagName: 'small', markdown: 'sm', symbol: '~' });
 
 const transformations: MapTransformation<TemplateTransformations> = {
   bold,
@@ -248,6 +322,8 @@ const transformations: MapTransformation<TemplateTransformations> = {
   abbrev,
   paragraph,
   lists,
+  image,
+  small
 };
 
 export default transformations;

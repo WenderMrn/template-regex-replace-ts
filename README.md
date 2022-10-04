@@ -125,11 +125,18 @@ transformations: [
     <td>[Link New Page](https://www.lipsum.com/){"target": "_blank"}</td> 
     <td><a href="https://www.lipsum.com/" target="_blank">Link New Page</a></td>
   </tr>
-   <tr>
+  <tr>
     <td>link (Another attributes)</td> 
     <td>[Another Link](https://www.lipsum.com/){"target": "_blank", "class": "default-link", id: "link-lorem"}</td> 
     <td>
       <a href="https://www.lipsum.com/" target="_blank" class="default-link" id="link-lorem">Another Link</a>
+    </td>
+  </tr>
+  <tr>
+    <td>link (button css)</td> 
+    <td>[Link Button](https://www.lipsum.com/){"target": "_blank", "style": "background-color: #4CAF50;color: white;padding: 8px 16px;text-align: center;border-radius: 10px"}</td> 
+    <td>
+      <a href="https://www.lipsum.com/" target="_blank" style="background-color: #4CAF50;color: white;padding: 8px 16px;text-align: center;border-radius: 10px">Link Button</a>
     </td>
   </tr>
   <tr>
@@ -172,10 +179,15 @@ transformations: [
     <td>ol[Item One||Item Two||Item Six]</td> 
     <td><ol><li>Item One</li><li>Item Two</li><li>Item Six</li></ol></td>
   </tr>
-   <tr>
+  <tr>
     <td>lists (unordered)</td> 
     <td>ul[Item One||Item Two||Item Six]</td> 
     <td><ul><li>Item One</li><li>Item Two</li><li>Item Six</li></ul></td>
+  </tr>
+   <tr>
+    <td>image</td> 
+    <td>#[alternative text](url){"width": "100", "height": "200"}</td> 
+    <td><img src="https://images.pexels.com/photos/13633764/pexels-photo-13633764.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="text alternative" width="100" height="200" /></td>
   </tr>
 </table>
 </html>
