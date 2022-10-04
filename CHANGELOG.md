@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/WenderMrn/template-regex-replace-ts/compare/v1.5.1...v1.6.0) (2022-10-04)
+
+
+### Features
+
+* **image and small text:** add small text and image ([8c3f787](https://github.com/WenderMrn/template-regex-replace-ts/commit/8c3f787b6b8af48fea1647fff2c9584a56bb800a))
+
 ## [1.5.1](https://github.com/WenderMrn/template-regex-replace-ts/compare/v1.5.0...v1.5.1) (2022-09-30)
 
 

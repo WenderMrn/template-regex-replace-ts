@@ -323,7 +323,7 @@ const transformations: MapTransformation<TemplateTransformations> = {
   paragraph,
   lists,
   image,
-  small
+  small,
 };
 
 export default transformations;

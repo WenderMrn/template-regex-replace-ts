@@ -17,7 +17,7 @@ export const ALL_TEMPLATE_TRANSFORMATIONS = [
   'paragraph',
   'lists',
   'image',
-  'small'
+  'small',
 ] as const;
 
 export type TemplateTransformations = typeof ALL_TEMPLATE_TRANSFORMATIONS[number];

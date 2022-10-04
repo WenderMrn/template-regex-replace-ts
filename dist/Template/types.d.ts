@@ -1,5 +1,5 @@
 declare type RuleItem = RegExp | string;
-export declare const ALL_TEMPLATE_TRANSFORMATIONS: readonly ["bold", "newLine", "tab", "italic", "link", "underline", "style", "deleted", "subscript", "superscript", "horizontalRule", "titles", "abbrev", "paragraph", "lists"];
+export declare const ALL_TEMPLATE_TRANSFORMATIONS: readonly ["bold", "newLine", "tab", "italic", "link", "underline", "style", "deleted", "subscript", "superscript", "horizontalRule", "titles", "abbrev", "paragraph", "lists", "image", "small"];
 export declare type TemplateTransformations = typeof ALL_TEMPLATE_TRANSFORMATIONS[number];
 export declare type CustomTypesTransformations<T> = TemplateTransformations | T;
 export interface Rule {

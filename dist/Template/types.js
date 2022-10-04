@@ -17,6 +17,8 @@ exports.ALL_TEMPLATE_TRANSFORMATIONS = [
     'abbrev',
     'paragraph',
     'lists',
+    'image',
+    'small'
 ];
 var TypeOperation;
 (function (TypeOperation) {
