@@ -94,7 +94,7 @@ const italic: Transformation = {
 transformations: [
   'bold' , 'newLine', 'tab', 'italic', 'link', 'underline',
   'style', 'deleted', 'subscript', 'superscript','horizontalRule',
-  'titles', 'abbrev', 'paragraph', 'lists'
+  'titles', 'abbrev', 'paragraph', 'lists', 'image', 'small'
 ]
 ```
 
@@ -184,10 +184,15 @@ transformations: [
     <td>ul[Item One||Item Two||Item Six]</td> 
     <td><ul><li>Item One</li><li>Item Two</li><li>Item Six</li></ul></td>
   </tr>
-   <tr>
+  <tr>
     <td>image</td> 
-    <td>#[alternative text](url){"width": "100", "height": "200"}</td> 
-    <td><img src="https://images.pexels.com/photos/13633764/pexels-photo-13633764.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="text alternative" width="100" height="200" /></td>
+    <td>#[alternative text](url){"width": "150", "height": "200"}</td> 
+    <td><img src="https://images.pexels.com/photos/13633764/pexels-photo-13633764.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="text alternative" width="150" height="200" /></td>
+  </tr>
+  <tr>
+    <td>small (small text)</td> 
+    <td>~sm~Lorem~sm~ ipsum dolor ~sm~sit~sm~ amet...</td> 
+    <td><small>Lorem</small> ipsum dolor <small>sit</small> amet...</td>
   </tr>
 </table>
 </html>
