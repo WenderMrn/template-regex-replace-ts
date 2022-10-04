@@ -157,6 +157,18 @@ describe('Template', () => {
       expect(tpl.btoa(outText)).toEqual(inputText);
     });
 
+    it('should be a incomplete link', () => {
+      const tpl = new Template();
+
+      const inputText =
+        'Lorem ipsum [dolor](https://www.lipsum.com/?name= john){{"target": "_blank", "class": "green", "id": "lorem-1"}...';
+      const inputText2 = 'Lorem ipsum [dolor](https://www.lipsum.com/?name= john)...';
+      const outputText = 'Lorem ipsum <a href="https://www.lipsum.com/?name= john">dolor</a>...';
+
+      expect(tpl.atob(inputText)).toEqual(outputText);
+      expect(tpl.btoa(outputText)).toEqual(inputText2);
+    });
+
     it('should be a deleted text', () => {
       const tpl = new Template();
 
@@ -269,6 +281,32 @@ describe('Template', () => {
 
       expect(tpl.atob(inputText)).toEqual(outputText);
       expect(tpl.btoa(outputText)).toEqual(inputText);
+    });
+
+    it('should be a simple image', () => {
+      const tpl = new Template();
+
+      const imageSrc =
+        'https://images.pexels.com/photos/13633764/pexels-photo-13633764.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
+      const inputText = `#[alternative text](${imageSrc})`;
+      const outputText = `<img src="${imageSrc}" alt="alternative text" />`;
+
+      expect(tpl.atob(inputText)).toEqual(outputText);
+      expect(tpl.btoa(outputText)).toEqual(inputText);
+    });
+
+    it('should be a incomplete image', () => {
+      const tpl = new Template();
+
+      const imageSrc =
+        'https://images.pexels.com/photos/13633764/pexels-photo-13633764.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
+      const inputText = `#[alternative text](${imageSrc}){{"width":"100"}`;
+      const inputText2 = `#[alternative text](${imageSrc})`;
+     
+      const outputText = `<img src="${imageSrc}" alt="alternative text" />`;
+      
+      expect(tpl.atob(inputText)).toEqual(outputText);
+      expect(tpl.btoa(outputText)).toEqual(inputText2);
     });
 
     it('should be a small text', () => {
