@@ -149,9 +149,9 @@ describe('Template', () => {
       const tpl = new Template();
 
       const inputText =
-        'Lorem ipsum [dolor](https://www.lipsum.com/){"target": "_blank", "class": "green", "id": "lorem-1"} sit [amet link](https://www.lipsum.com/){"target": "_blank"}...';
+        'Lorem ipsum [dolor](https://www.lipsum.com/?name= john){"target": "_blank", "class": "green", "id": "lorem-1"} sit [amet link](https://www.lipsum.com/){"target": "_blank"}...';
       const outText =
-        'Lorem ipsum <a href="https://www.lipsum.com/" target="_blank" class="green" id="lorem-1">dolor</a> sit <a href="https://www.lipsum.com/" target="_blank">amet link</a>...';
+        'Lorem ipsum <a href="https://www.lipsum.com/?name= john" target="_blank" class="green" id="lorem-1">dolor</a> sit <a href="https://www.lipsum.com/" target="_blank">amet link</a>...';
 
       expect(tpl.atob(inputText)).toEqual(outText);
       expect(tpl.btoa(outText)).toEqual(inputText);
@@ -258,6 +258,28 @@ describe('Template', () => {
       expect(tpl.atob(inputText)).toEqual(outputText);
       expect(tpl.btoa(outputText)).toEqual(inputText);
     });
+
+    it('should be a image', () => {
+      const tpl = new Template();
+
+      const imageSrc =
+        'https://images.pexels.com/photos/13633764/pexels-photo-13633764.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
+      const inputText = `#[alternative text](${imageSrc}){"width": "50", "height": "100"}`;
+      const outputText = `<img src="${imageSrc}" alt="alternative text" width="50" height="100" />`;
+
+      expect(tpl.atob(inputText)).toEqual(outputText);
+      expect(tpl.btoa(outputText)).toEqual(inputText);
+    });
+
+    it('should be a small text', () => {
+      const tpl = new Template();
+
+      const inputText = '~sm~Lorem~sm~ ipsum dolor ~sm~sit~sm~ amet...';
+      const outputText = '<small>Lorem</small> ipsum dolor <small>sit</small> amet...';
+
+      expect(tpl.atob(inputText)).toEqual(outputText);
+      expect(tpl.btoa(outputText)).toEqual(inputText);
+    });
   });
 
   // next describe
@@ -300,7 +322,7 @@ describe('Template', () => {
       expect(tpl.btoa(outputText)).toEqual(inputText);
     });
 
-    it('should be a upsercase text picked (TS)', () => {
+    it('should be a uppercase text picked (TS)', () => {
       type CustomTemplateTransformations = TemplateTransformations | 'uppercase';
 
       const tpl = new Template()
